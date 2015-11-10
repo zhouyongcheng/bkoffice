@@ -40,7 +40,6 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             };
 
             $scope.create = function() {
-                console.log('----------step into create service method----------');
                 Restangular.all('/service/create').post($scope.service).then(function(data) {
                     $state.go('dashboard.service.list');
                 }, function(e) {

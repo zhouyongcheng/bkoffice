@@ -13,7 +13,7 @@ require.config({
         metisMenu: 'bower_components/metisMenu/dist/metisMenu.min',
         loginModule : 'modules/login/loginModule',
         dashboardModule : 'modules/dashboard/dashboardModule',
-        usersModule: 'modules/users/usersModule',
+        userModule: 'modules/user/userModule',
         serviceModule: 'modules/service/serviceModule',
         distributorModule: 'modules/distributor/distributorModule',
         outletModule: 'modules/outlet/outletModule',

@@ -9,7 +9,7 @@ define([
     'ngFileUpload',
     'loginModule',
     'dashboardModule',
-    'usersModule',
+    'userModule',
     'serviceModule',
     'distributorModule',
     'outletModule',
@@ -32,7 +32,7 @@ define([
          'LocalStorageModule',
          'loginModule',
          'dashboardModule',
-         'usersModule',
+         'userModule',
          'serviceModule',
          'distributorModule',
          'outletModule',
@@ -49,7 +49,8 @@ define([
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
             // used for CORS
             //$httpProvider.defaults.withCredentials = true;
-            //RestangularProvider.setBaseUrl("http://localhost:3000");
+
+            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true)
 
             // used for jwt begin
@@ -135,6 +136,26 @@ define([
                         templateUrl: 'modules/outlet/outlet.add.html',
                         controller: 'OutletAddController'
                 })
+
+                // 用户管理机能
+                .state('dashboard.user', {
+                    url: '/user',
+                    abstract: true,
+                    template: '<ui-view />'
+                }).state('dashboard.user.list', {
+                    url: '/list',
+                    templateUrl: 'modules/user/user.list.html',
+                    controller: 'UserListController'
+                }).state('dashboard.user.edit', {
+                    url: '/edit/:id',
+                    templateUrl: 'modules/user/user.edit.html',
+                    controller: 'UserEditController'
+                }).state('dashboard.user.add', {
+                    url: '/add',
+                    templateUrl: 'modules/user/user.add.html',
+                    controller: 'UserAddController'
+                })
+                
                 // 经纪人管理机能
                 .state('dashboard.realtor', {
                     url: '/realtor',
@@ -153,29 +174,7 @@ define([
                     templateUrl: 'modules/realtor/realtor.add.html',
                     controller: 'RealtorAddController'
                 })
-                // 用户管理机能
-                .state('dashboard.users', {
-                    url: '/users',
-                    abstract: true,
-                    templateUrl: 'modules/users/users.html',
-                }).state('dashboard.users.list', {
-                    resolve : {
-                        users : function(Restangular) {
-                            return Restangular.all('/users').getList().$object
-                        }
-                    },
-                    url: '/list',
-                    templateUrl: 'modules/users/users.list.html',
-                    controller: 'UsersListController'
-                }).state('dashboard.users.edit', {
-                    url: '/edit/:id',
-                    templateUrl: 'modules/users/users.edit.html',
-                    controller: 'UsersEditController'
-                }).state('dashboard.users.add', {
-                    url: '/add',
-                    templateUrl: 'modules/users/users.add.html',
-                    controller: 'UsersAddController'
-                })
+                
 
 
                 // 文件上传功能
