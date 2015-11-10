@@ -1,0 +1,47 @@
+<div>
+    <div class="form-group">
+        <label for="province" class="col-sm-2 control-label">省份</label>
+        <div class="col-sm-4">
+            <select name="province" id="province" class="form-control"
+                    ng-model="province"
+                    ng-options="m.index as m.name for m in provinces"
+                    ng-change="changeProvince(province)">
+                <option value=""> -- 请选择 -- </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="city" class="col-sm-2 control-label">城市</label>
+        <div class="col-sm-4">
+            <select name="city" id="city" class="form-control"
+                    ng-model="city"
+                    ng-options="m.index as m.name for m in cities"
+                    ng-change="changeCity(province, city)">
+                <option value=""> -- 请选择 -- </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="distributor" class="col-sm-2 control-label">代理店</label>
+        <div class="col-sm-4">
+            <select name="distributor" id="distributor" class="form-control"
+                    ng-model="distributor"
+                    ng-options="m._id as m.name for m in distributors">
+                <option value=""> -- 请选择 -- </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="district" class="col-sm-2 control-label">区域</label>
+        <div class="col-sm-4">
+            <select name="district" id="district" class="form-control"
+                    ng-model="district"
+                    ng-options="m.index as m.name for m in districts">
+                <option value=""> -- 请选择 -- </option>
+            </select>
+        </div>
+    </div>
+</div>

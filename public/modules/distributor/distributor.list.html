@@ -1,0 +1,29 @@
+
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>代理商名</th>
+        <th>服务商</th>
+        <th>城市</th>
+        <th>详细地址</th>
+        <th>手机</th>
+        <th>座机</th>
+        <th>
+            <a class="btn btn-sm btn-success" ui-sref="dashboard.distributor.add">创建代理店</a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="distributor in distributors">
+        <td>{{distributor.name}}</td>
+        <td>{{distributor.serviceId}}</td>
+        <td>{{distributor.address.city}}</td>
+        <td>{{distributor.mobile}}</td>
+        <td>{{distributor.tel}}</td>
+        <td>
+            <a class="btn btn-sm btn-danger" ng-click="delete(distributor._id)">删除</a>
+            <a class="btn btn-sm btn-default" ng-click="edit(distributor._id)">编辑</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

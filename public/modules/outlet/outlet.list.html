@@ -1,0 +1,29 @@
+
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>门店名</th>
+        <th>代理商</th>
+        <th>城市</th>
+        <th>详细地址</th>
+        <th>手机</th>
+        <th>座机</th>
+        <th>
+            <a class="btn btn-sm btn-success" ui-sref="dashboard.outlet.add">创建门店</a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="outlet in outlets">
+        <td>{{outlet.name}}</td>
+        <td>{{outlet.distributor.name}}</td>
+        <td>{{outlet.address.city}}</td>
+        <td>{{outlet.mobile}}</td>
+        <td>{{outlet.tel}}</td>
+        <td>
+            <a class="btn btn-sm btn-danger" ng-click="delete(outlet._id)">删除</a>
+            <a class="btn btn-sm btn-default" ng-click="edit(outlet._id)">编辑</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
