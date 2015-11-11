@@ -9,6 +9,9 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
         .controller('ServiceListController', function($scope,$state,Restangular) {
 
             Restangular.one('/services').get().then(function(data){
+                console.log('************************');
+                console.log(data);
+                console.log('************************');
                 $scope.services = data.result;
             });
 

@@ -1,19 +1,23 @@
 require.config({
     paths : {
+        jquery : 'bower_components/jquery/dist/jquery.min',
         angular : 'bower_components/angular/angular.min',
         ngResource:'bower_components/angular-resource/angular-resource.min',
         uiRouter : 'bower_components/angular-ui-router/release/angular-ui-router.min',
-        jquery : 'bower_components/jquery/dist/jquery.min',
         twitter: 'bower_components/bootstrap/dist/js/bootstrap.min',
+        bootstrapTpls: 'bower_components/angular-ui-bootstrap/ui-bootstrap-tpls.0.11.2',
+        prettify: 'bower_components/prettify/prettify.1.0.1',
         domReady : 'bower_components/requirejs-domready/domReady',
         lodash : 'bower_components/lodash/lodash.min',
         restangular : 'bower_components/restangular/dist/restangular.min',
         angularJwt : 'bower_components/angular-jwt/dist/angular-jwt.min',
         angularLocalStorage : 'bower_components/angular-local-storage/dist/angular-local-storage.min',
         metisMenu: 'bower_components/metisMenu/dist/metisMenu.min',
+        treeControl: 'bower_components/angular-tree-control/angular-tree-control',
         loginModule : 'modules/login/loginModule',
         dashboardModule : 'modules/dashboard/dashboardModule',
         userModule: 'modules/user/userModule',
+        organizationModule: 'modules/organization/organizationModule',
         serviceModule: 'modules/service/serviceModule',
         distributorModule: 'modules/distributor/distributorModule',
         outletModule: 'modules/outlet/outletModule',
@@ -56,10 +60,12 @@ require.config({
         metisMenu : {
             deps : ['jquery']
         },
+        treeControl: {
+            deps : ['angular']
+        },
         fileUpload : {
             deps : ['angular']
-        }
-        ,
+        },
         ngFileUpload : {
             deps : ['angular']
         }
@@ -71,7 +77,10 @@ require([
     'angular',
     'app',
     'domReady',
-    'metisMenu'
+    'metisMenu',
+    'bootstrapTpls',
+    'prettify',
+    'treeControl'
 ], function($, angular, app,domReady) {
     'use strict';
     domReady(function() {

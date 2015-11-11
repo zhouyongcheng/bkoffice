@@ -10,6 +10,7 @@ define([
     'loginModule',
     'dashboardModule',
     'userModule',
+    'organizationModule',
     'serviceModule',
     'distributorModule',
     'outletModule',
@@ -33,6 +34,7 @@ define([
          'loginModule',
          'dashboardModule',
          'userModule',
+         'organizationModule',
          'serviceModule',
          'distributorModule',
          'outletModule',
@@ -46,26 +48,17 @@ define([
          'allianceModule',
          'uploadModule'
         ])
+        .run(function(Restangular,localStorageService) {
+            var token = localStorageService.get('token');
+            if (token) {
+                Restangular.setDefaultHeaders({'X-Access-Token':token});
+            }
+        })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            // used for CORS
-            //$httpProvider.defaults.withCredentials = true;
 
-            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
-            localStorageServiceProvider.setPrefix('portal').setNotify(true, true)
-
-            // used for jwt begin
-            jwtInterceptorProvider.tokenGetter = ['jwtHelper','localStorageService',function(jwtHelper,localStorageService) {
-                if (localStorageService.isSupported) {
-                    var jwt = localStorageService.get('jwt');
-                    //var detail = jwtHelper.decodeToken(jwt);
-                    //console.log("---------------------------");
-                    //console.log("detail token : " + detail);
-                    //console.log("---------------------------");
-                    return jwt;
-                }
-            }];
-            $httpProvider.interceptors.push('jwtInterceptor');
-                // used for jwt end
+            $httpProvider.defaults.withCredentials = true;
+            RestangularProvider.setBaseUrl("http://192.168.0.12:3041/");
+            localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
 
             $urlRouterProvider.otherwise('/login');
 
@@ -137,6 +130,24 @@ define([
                         controller: 'OutletAddController'
                 })
 
+                // 组织机构机能管理
+                .state('dashboard.organization', {
+                    url: '/organization',
+                    abstract: true,
+                    template: '<ui-view />'
+                }).state('dashboard.organization.list', {
+                    url: '/list',
+                    templateUrl: 'modules/organization/organization.list.html',
+                    controller: 'OrganizationListController'
+                }).state('dashboard.organization.edit', {
+                    url: '/edit/:id',
+                    templateUrl: 'modules/organization/organization.edit.html',
+                    controller: 'OrganizationEditController'
+                }).state('dashboard.organization.add', {
+                        url: '/add',
+                        templateUrl: 'modules/organization/organization.add.html',
+                        controller: 'OrganizationAddController'
+                })
                 // 用户管理机能
                 .state('dashboard.user', {
                     url: '/user',
@@ -174,9 +185,6 @@ define([
                     templateUrl: 'modules/realtor/realtor.add.html',
                     controller: 'RealtorAddController'
                 })
-                
-
-
                 // 文件上传功能
                 .state('upload', {
                     url: '/upload',

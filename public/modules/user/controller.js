@@ -7,23 +7,35 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             $scope.message = '';
         })
         .controller('UserListController', function($scope,$state,Restangular,localStorageService) {
+            console.log('------------查询注册的用户-------------');
+            Restangular.one('/user/search/_').get().then(function(data) {
+                console.log(data.result);
+                $scope.users = data.result;
+            });
+            console.log('------------查询注册的用户-------------');
 
             $scope.edit = function(_id) {
                 $state.go('dashboard.user.edit', {id:_id});
-            }
+            };
 
             $scope.delete = function(_id) {
 
-            }
+            };
 
         }).controller('UserAddController', function($scope,$state,Restangular) {
             $scope.user = {};
 
             $scope.create = function() {
+                console.log('----------calling add user begin---------------');
                 Restangular.all('/signup').post($scope.user, function(user) {
+
                     console.log(JSON.stringify(user));
+
                     $state.go('dashboard.user.list');
+                }, function(e) {
+                    console.log(e);
                 });
+                console.log('-----------calling add user end--------------');
             };
 
             $scope.back = function() {
