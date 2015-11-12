@@ -12,6 +12,18 @@ define(['jquery', 'angular', 'uiRouter','angularLocalStorage'], function($, angu
                 });
                 $('#menu4').metisMenu();
             });
-            $scope.message = 'this is dashboard page';
+            $scope.logout = function() {
+                var token = localStorageService.get('token');
+                if (token) {
+                    console.log("calling remove token begin");
+                    localStorageService.remove('token');
+                    Restangular.one('/signout', token).get().then(function(data) {
+                        console.log(JSON.stringify(data));
+                    }, function(e) {
+                        console.log('exception');
+                    });
+                }
+                $state.go('login');
+            }
         });
 });

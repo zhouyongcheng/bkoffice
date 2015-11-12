@@ -60,6 +60,9 @@ require.config({
         metisMenu : {
             deps : ['jquery']
         },
+        bootstrapTpls : {
+            deps : ['jquery']
+        },
         treeControl: {
             deps : ['angular']
         },

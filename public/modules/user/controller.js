@@ -26,16 +26,11 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             $scope.user = {};
 
             $scope.create = function() {
-                console.log('----------calling add user begin---------------');
                 Restangular.all('/signup').post($scope.user, function(user) {
-
-                    console.log(JSON.stringify(user));
-
-                    $state.go('dashboard.user.list');
+                    $state.transitionTo('dashboard.user.list');
                 }, function(e) {
                     console.log(e);
                 });
-                console.log('-----------calling add user end--------------');
             };
 
             $scope.back = function() {

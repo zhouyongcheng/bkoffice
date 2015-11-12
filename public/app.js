@@ -48,18 +48,23 @@ define([
          'allianceModule',
          'uploadModule'
         ])
-        .run(function(Restangular,localStorageService) {
-            var token = localStorageService.get('token');
-            if (token) {
-                Restangular.setDefaultHeaders({'X-Access-Token':token});
-            }
+        .factory('sessionInjector', function(localStorageService) {
+            var sessionInjector = {
+                request: function(config) {
+                    var token = localStorageService.get('token');
+                    if (token) {
+                        config.headers['X-Access-Token'] = token;
+                    }
+                    return config;
+                }
+            };
+            return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-
-            $httpProvider.defaults.withCredentials = true;
             RestangularProvider.setBaseUrl("http://192.168.0.12:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
-
+            $httpProvider.defaults.withCredentials = true;
+            $httpProvider.interceptors.push('sessionInjector');
             $urlRouterProvider.otherwise('/login');
 
             $stateProvider
