@@ -5,14 +5,14 @@ require.config({
         ngResource:'bower_components/angular-resource/angular-resource.min',
         uiRouter : 'bower_components/angular-ui-router/release/angular-ui-router.min',
         twitter: 'bower_components/bootstrap/dist/js/bootstrap.min',
-        bootstrapTpls: 'bower_components/angular-ui-bootstrap/ui-bootstrap-tpls.0.11.2',
-        prettify: 'bower_components/prettify/prettify.1.0.1',
         domReady : 'bower_components/requirejs-domready/domReady',
         lodash : 'bower_components/lodash/lodash.min',
         restangular : 'bower_components/restangular/dist/restangular.min',
         angularJwt : 'bower_components/angular-jwt/dist/angular-jwt.min',
         angularLocalStorage : 'bower_components/angular-local-storage/dist/angular-local-storage.min',
         metisMenu: 'bower_components/metisMenu/dist/metisMenu.min',
+        bootstrapTpls: 'bower_components/angular-ui-bootstrap/ui-bootstrap-tpls.0.11.2',
+        prettify: 'bower_components/prettify/prettify.1.0.1',
         treeControl: 'bower_components/angular-tree-control/angular-tree-control',
         loginModule : 'modules/login/loginModule',
         dashboardModule : 'modules/dashboard/dashboardModule',
@@ -58,10 +58,10 @@ require.config({
             deps : ['angular']
         },
         metisMenu : {
-            deps : ['jquery']
+            deps : ['twitter']
         },
         bootstrapTpls : {
-            deps : ['jquery']
+            deps : ['twitter','angular']
         },
         treeControl: {
             deps : ['angular']

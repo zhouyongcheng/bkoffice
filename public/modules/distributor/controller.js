@@ -7,11 +7,7 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             $scope.message = '';
         })
         .controller('DistributorListController', function($scope,$state,Restangular,localStorageService) {
-
             Restangular.one('/distributor/list/keyword/_/sort/name/order/ASC/limit/_').get().then(function(data) {
-                console.log('------------distributor information-----------------');
-                console.log(JSON.stringify(data.result));
-                console.log('------------distributor information-----------------');
                 $scope.distributors = data.result;
             });
 

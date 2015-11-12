@@ -61,11 +61,20 @@ define([
             return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.12:3041/");
+            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('sessionInjector');
             $urlRouterProvider.otherwise('/login');
+
+            // for test only add begin
+            //RestangularProvider.setRequestInterceptor(function(element, operation, route, url) {
+            //    console.log("calling restangular request intercept begin");
+            //    console.log("element = " + JSON.stringify(element));
+            //    console.log("calling restangular request intercept end");
+            //    return element;
+            //});
+            // for test only add end
 
             $stateProvider
                 // 登录机能
