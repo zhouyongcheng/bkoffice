@@ -61,7 +61,7 @@ define([
             return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
+            RestangularProvider.setBaseUrl("http://192.168.0.12:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('sessionInjector');
@@ -89,6 +89,45 @@ define([
                     templateUrl: 'modules/dashboard/dashboard.html',
                     controller : 'DashboardController'
                 })
+
+                // 组织机构机能管理
+                .state('dashboard.organization', {
+                    url: '/organization',
+                    views : {
+                        'sidebar' : {
+                            controller:'OrganizationController',
+                            templateUrl: 'modules/organization/sidebar.html'
+                        },
+                        'content' : {
+                            template: '<ui-view />'
+                        }
+                    }
+                }).state('dashboard.organization.list', {
+                    url: '/list',
+                    templateUrl: 'modules/organization/organization.list.html',
+                    controller: 'OrganizationListController'
+                })
+                // 代理店管理机能
+                .state('dashboard.organization.distributor', {
+                    url: '/distributor/:id',
+                    templateUrl: 'modules/organization/organization.distributor.html',
+                    controller: 'OrganizationDistributorController'
+                })
+                // 门店管理机能
+                .state('dashboard.organization.outlet', {
+                    url: '/outlet/:id',
+                    templateUrl: 'modules/organization/organization.outlet.html',
+                    controller: 'OrganizationOutletController'
+                })
+                .state('dashboard.organization.edit', {
+                    url: '/edit/:id',
+                    templateUrl: 'modules/organization/organization.edit.html',
+                    controller: 'OrganizationEditController'
+                }).state('dashboard.organization.add', {
+                    url: '/add',
+                    templateUrl: 'modules/organization/organization.add.html',
+                    controller: 'OrganizationAddController'
+                })
                 // 服务商管理机能
                 .state('dashboard.service', {
                     url: '/service',
@@ -110,8 +149,16 @@ define([
                 // 代理店管理机能
                 .state('dashboard.distributor', {
                     url: '/distributor',
-                    abstract: true,
-                    template: '<ui-view />'
+                    views : {
+                        'sidebar' : {
+                            controller:'OrganizationController',
+                            templateUrl: 'modules/organization/sidebar.html'
+                        },
+                        'content' : {
+                            abstract: true,
+                            template: '<ui-view />'
+                        }
+                    }
                 }).state('dashboard.distributor.list', {
                     url: '/list',
                     templateUrl: 'modules/distributor/distributor.list.html',
@@ -144,29 +191,14 @@ define([
                         controller: 'OutletAddController'
                 })
 
-                // 组织机构机能管理
-                .state('dashboard.organization', {
-                    url: '/organization',
-                    abstract: true,
-                    template: '<ui-view />'
-                }).state('dashboard.organization.list', {
-                    url: '/list',
-                    templateUrl: 'modules/organization/organization.list.html',
-                    controller: 'OrganizationListController'
-                }).state('dashboard.organization.edit', {
-                    url: '/edit/:id',
-                    templateUrl: 'modules/organization/organization.edit.html',
-                    controller: 'OrganizationEditController'
-                }).state('dashboard.organization.add', {
-                        url: '/add',
-                        templateUrl: 'modules/organization/organization.add.html',
-                        controller: 'OrganizationAddController'
-                })
                 // 用户管理机能
                 .state('dashboard.user', {
-                    url: '/user',
-                    abstract: true,
-                    template: '<ui-view />'
+                    views : {
+                        'content' : {
+                            abstract: true,
+                            template: '<ui-view />'
+                        }
+                    }
                 }).state('dashboard.user.list', {
                     url: '/list',
                     templateUrl: 'modules/user/user.list.html',

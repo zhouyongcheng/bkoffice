@@ -1,3 +1,5 @@
 define(['angular', 'modules/dashboard/controller'], function(angular) {
-    return angular.module('dashboardModule', ['dashboardControllers']);
+    return angular.module('dashboardModule', ['dashboardControllers']).run(function() {
+
+    });
 });
