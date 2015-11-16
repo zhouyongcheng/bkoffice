@@ -10,6 +10,7 @@ define([
     'loginModule',
     'dashboardModule',
     'userModule',
+    'roleModule',
     'organizationModule',
     'serviceModule',
     'distributorModule',
@@ -34,6 +35,7 @@ define([
          'loginModule',
          'dashboardModule',
          'userModule',
+         'roleModule',
          'organizationModule',
          'serviceModule',
          'distributorModule',
@@ -211,6 +213,28 @@ define([
                     url: '/add',
                     templateUrl: 'modules/user/user.add.html',
                     controller: 'UserAddController'
+                })
+
+                // 角色管理机能
+                .state('dashboard.role', {
+                    views : {
+                        'content' : {
+                            abstract: true,
+                            template: '<ui-view />'
+                        }
+                    }
+                }).state('dashboard.role.list', {
+                    url: '/list',
+                    templateUrl: 'modules/role/role.list.html',
+                    controller: 'RoleListController'
+                }).state('dashboard.role.edit', {
+                    url: '/edit/:id',
+                    templateUrl: 'modules/role/role.edit.html',
+                    controller: 'RoleEditController'
+                }).state('dashboard.role.add', {
+                    url: '/add',
+                    templateUrl: 'modules/role/role.add.html',
+                    controller: 'RoleAddController'
                 })
                 
                 // 经纪人管理机能

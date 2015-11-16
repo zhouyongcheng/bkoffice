@@ -1,0 +1,36 @@
+<div class="condition">
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <label class="sr-only" for="rolename">角色名</label>
+            <input type="email" class="form-control" name="email" id="rolename" placeholder="角色名 ...">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="email">邮箱</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="邮箱 ...">
+        </div>
+        <button class="btn btn-success">检索</button>
+    </form>
+</div>
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>角色姓名</th>
+        <th>登录名</th>
+        <th>手机号</th>
+        <th>
+            <a class="btn btn-sm btn-success" ui-sref="dashboard.role.add">添加角色</a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="role in roles">
+        <td>{{role.nickname}}</td>
+        <td>{{role.rolename}}</td>
+        <td>{{role.mobile}}</td>
+        <td>
+            <a class="btn btn-sm btn-danger" ng-click="delete(role._id)">删除</a>
+            <a class="btn btn-sm btn-default" ng-click="edit(role._id)">编辑</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

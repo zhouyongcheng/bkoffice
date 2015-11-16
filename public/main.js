@@ -17,6 +17,7 @@ require.config({
         loginModule : 'modules/login/loginModule',
         dashboardModule : 'modules/dashboard/dashboardModule',
         userModule: 'modules/user/userModule',
+        roleModule: 'modules/role/roleModule',
         organizationModule: 'modules/organization/organizationModule',
         serviceModule: 'modules/service/serviceModule',
         distributorModule: 'modules/distributor/distributorModule',

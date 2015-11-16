@@ -1,0 +1,52 @@
+<form class="form-horizontal" role="form">
+    <div class="form-group">
+        <legend>添加角色</legend>
+    </div>
+
+    <div class="form-group">
+        <label for="rolename" class="col-sm-2 control-label text-right">登录账号：</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="rolename" ng-model="role.rolename">
+        </div>
+    </div>
+
+    <!--<div class="form-group">-->
+        <!--<label for="mobile" class="col-sm-2 control-label text-right">登录手机：</label>-->
+        <!--<div class="col-sm-4">-->
+            <!--<input type="text" class="form-control" id="mobile" ng-model="role.mobile">-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="form-group">
+        <label for="nickname" class="col-sm-2 control-label text-right">姓名：</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="nickname" ng-model="role.nickname">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="password" class="col-sm-2 control-label text-right">密码：</label>
+        <div class="col-sm-4">
+            <input type="password" class="form-control" id="password" ng-model="role.password">
+        </div>
+    </div>
+
+    <!--地理区域-->
+    <atm-location province="role.address.state" city="role.address.city" district="role.address.district"></atm-location>
+
+    <!--详细地址-->
+    <div class="form-group">
+    	<label for="addressText" class="col-sm-2 control-label">详细地址:</label>
+    	<div class="col-md-4">
+    		<input type="text" name="addressText" id="addressText" class="form-control" ng-model="role.address.text" />
+    	</div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-2">
+            <button type="submit" class="btn btn-success" ng-click="create()">添加</button>
+            <button type="submit" class="btn btn-success" ng-click="back()">返回</button>
+        </div>
+    </div>
+
+</form>
