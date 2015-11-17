@@ -28,6 +28,7 @@ define([
 ], function(angular) {
     return angular.module('portal',
         ['ui.router',
+         'ui.bootstrap',
          'ngFileUpload',
          'restangular',
          'angular-jwt',
@@ -195,6 +196,7 @@ define([
 
                 // 用户管理机能
                 .state('dashboard.user', {
+                    url: '/user',
                     views : {
                         'content' : {
                             abstract: true,
@@ -217,6 +219,7 @@ define([
 
                 // 角色管理机能
                 .state('dashboard.role', {
+                    url:'/role',
                     views : {
                         'content' : {
                             abstract: true,

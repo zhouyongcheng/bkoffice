@@ -1,52 +1,137 @@
 <form class="form-horizontal" role="form">
-    <div class="form-group">
-        <legend>添加角色</legend>
-    </div>
-
-    <div class="form-group">
-        <label for="rolename" class="col-sm-2 control-label text-right">登录账号：</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="rolename" ng-model="role.rolename">
-        </div>
-    </div>
-
     <!--<div class="form-group">-->
-        <!--<label for="mobile" class="col-sm-2 control-label text-right">登录手机：</label>-->
-        <!--<div class="col-sm-4">-->
-            <!--<input type="text" class="form-control" id="mobile" ng-model="role.mobile">-->
-        <!--</div>-->
+        <!--<legend>添加角色</legend>-->
     <!--</div>-->
 
-    <div class="form-group">
-        <label for="nickname" class="col-sm-2 control-label text-right">姓名：</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="nickname" ng-model="role.nickname">
+    <div class="panel panel-default">
+    	  <div class="panel-heading">
+    			<h3 class="panel-title">角色基本性息</h3>
+    	  </div>
+    	  <div class="panel-body">
+              <div class="form-group">
+                  <label for="parentId" class="col-md-2 control-label">所属节点:</label>
+
+                  <div class="col-md-4">
+                      <input type="text" name="parentId" id="parentId" class="form-control" ng-model="role.parentId" readonly/>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="name" class="col-md-2 control-label">角色名称:</label>
+
+                  <div class="col-md-4">
+                      <input type="text" name="name" id="name" class="form-control" ng-model="role.name" required="required"/>
+                  </div>
+              </div>
+    	  </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">角色对所属节点的操作</h3>
+        </div>
+        <div class="panel-body">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="">
+                    全部操作 （当前角色能够对所属节点进行所有操作，完全控制）
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="">
+                    更改节点
+                </label>
+            </div>
+
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="password" class="col-sm-2 control-label text-right">密码：</label>
-        <div class="col-sm-4">
-            <input type="password" class="form-control" id="password" ng-model="role.password">
+    <uib-tabset>
+
+    </uib-tabset>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">对当前角色的操作控制设定</h3>
         </div>
-    </div>
+        <div class="panel-body">
 
-    <!--地理区域-->
-    <atm-location province="role.address.state" city="role.address.city" district="role.address.district"></atm-location>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="">
+                    全部操作 （对该角色进行任何操作）
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="">
+                    禁止和启用 （可禁止或启用该角色）
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="">
+                    公开（启用并查看该角色的详细情报）
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="">
+                    管理角色权限 （给角色添加，收回操作节点的权限）
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="">
+                    管理角色成员(可添加，移除角色包含的成员）
+                </label>
+            </div>
 
-    <!--详细地址-->
-    <div class="form-group">
-    	<label for="addressText" class="col-sm-2 control-label">详细地址:</label>
-    	<div class="col-md-4">
-    		<input type="text" name="addressText" id="addressText" class="form-control" ng-model="role.address.text" />
-    	</div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-sm-4 col-sm-offset-2">
-            <button type="submit" class="btn btn-success" ng-click="create()">添加</button>
-            <button type="submit" class="btn btn-success" ng-click="back()">返回</button>
         </div>
     </div>
 
 </form>
+
+
+
+<div>
+    <p>Select a tab by setting active binding to true:</p>
+    <p>
+        <button type="button" class="btn btn-default btn-sm" ng-click="tabs[0].active = true">Select second tab</button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="tabs[1].active = true">Select third tab</button>
+    </p>
+    <p>
+        <button type="button" class="btn btn-default btn-sm" ng-click="tabs[1].disabled = ! tabs[1].disabled">Enable / Disable third tab</button>
+    </p>
+    <hr />
+
+    <uib-tabset>
+        <uib-tab heading="Static title">Static content</uib-tab>
+        <uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
+            {{tab.content}}
+        </uib-tab>
+        <uib-tab select="alertMe()">
+            <uib-tab-heading>
+                <i class="glyphicon glyphicon-bell"></i> Alert!
+            </uib-tab-heading>
+            I've got an HTML heading, and a select callback. Pretty cool!
+        </uib-tab>
+    </uib-tabset>
+
+    <hr />
+
+    <uib-tabset vertical="true" type="pills">
+        <uib-tab heading="Vertical 1">Vertical content 1</uib-tab>
+        <uib-tab heading="Vertical 2">Vertical content 2</uib-tab>
+    </uib-tabset>
+
+    <hr />
+
+    <uib-tabset justified="true">
+        <uib-tab heading="Justified">Justified content</uib-tab>
+        <uib-tab heading="SJ">Short Labeled Justified content</uib-tab>
+        <uib-tab heading="Long Justified">Long Labeled Justified content</uib-tab>
+    </uib-tabset>
+</div>

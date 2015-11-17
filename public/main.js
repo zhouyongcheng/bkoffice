@@ -11,7 +11,8 @@ require.config({
         angularJwt : 'bower_components/angular-jwt/dist/angular-jwt.min',
         angularLocalStorage : 'bower_components/angular-local-storage/dist/angular-local-storage.min',
         metisMenu: 'bower_components/metisMenu/dist/metisMenu.min',
-        bootstrapTpls: 'bower_components/angular-ui-bootstrap/ui-bootstrap-tpls.0.11.2',
+        uiBootstrap: 'bower_components/angular-bootstrap/ui-bootstrap.min',
+        uiBootstrapTpls: 'bower_components/angular-bootstrap/ui-bootstrap-tpls',
         prettify: 'bower_components/prettify/prettify.1.0.1',
         treeControl: 'bower_components/angular-tree-control/angular-tree-control',
         loginModule : 'modules/login/loginModule',
@@ -61,7 +62,10 @@ require.config({
         metisMenu : {
             deps : ['twitter']
         },
-        bootstrapTpls : {
+        uiBootstrap : {
+          deps : ['twitter', 'angular']
+        },
+        uiBootstrapTpls : {
             deps : ['twitter','angular']
         },
         treeControl: {
@@ -82,7 +86,8 @@ require([
     'app',
     'domReady',
     'metisMenu',
-    'bootstrapTpls',
+    'uiBootstrap',
+    'uiBootstrapTpls',
     'prettify',
     'treeControl'
 ], function($, angular, app,domReady) {
