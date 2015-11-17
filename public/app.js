@@ -10,6 +10,7 @@ define([
     'loginModule',
     'dashboardModule',
     'userModule',
+    'roleModule',
     'organizationModule',
     'serviceModule',
     'distributorModule',
@@ -27,6 +28,7 @@ define([
 ], function(angular) {
     return angular.module('portal',
         ['ui.router',
+         'ui.bootstrap',
          'ngFileUpload',
          'restangular',
          'angular-jwt',
@@ -34,6 +36,7 @@ define([
          'loginModule',
          'dashboardModule',
          'userModule',
+         'roleModule',
          'organizationModule',
          'serviceModule',
          'distributorModule',
@@ -190,10 +193,9 @@ define([
                         templateUrl: 'modules/outlet/outlet.add.html',
                         controller: 'OutletAddController'
                 })
-
                 // 用户管理机能
                 .state('dashboard.user', {
-                    url:'/user',
+                    url: '/user',
                     views : {
                         'content' : {
                             abstract: true,
@@ -212,6 +214,40 @@ define([
                     url: '/add',
                     templateUrl: 'modules/user/user.add.html',
                     controller: 'UserAddController'
+                })
+
+                // 角色管理机能
+                .state('dashboard.role', {
+                    url:'/role',
+                    views : {
+                        'sidebar': {
+                            templateUrl: 'modules/role/role.sidebar.html'
+                        },
+                        'content' : {
+                            abstract: true,
+                            template: '<ui-view />'
+                        }
+                    }
+                }).state('dashboard.role.list', {
+                    url: '/list',
+                    templateUrl: 'modules/role/role.list.html',
+                    controller: 'RoleListController'
+                }).state('dashboard.role.edit', {
+                    url: '/edit/:id',
+                    templateUrl: 'modules/role/role.edit.html',
+                    controller: 'RoleEditController'
+                }).state('dashboard.role.add', {
+                    url: '/add',
+                    templateUrl: 'modules/role/role.add.html',
+                    controller: 'RoleAddController'
+                }).state('dashboard.role.select', {
+                    url: '/select',
+                    templateUrl: 'modules/role/role.select.html',
+                    controller: 'RoleMultiController'
+                }).state('dashboard.role.tabset', {
+                    url: '/tabset',
+                    templateUrl: 'modules/role/role.tabs.html',
+                    controller: 'RoleTabsController'
                 })
                 
                 // 经纪人管理机能

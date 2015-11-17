@@ -21,6 +21,7 @@
                 <li><a ui-sref="dashboard.outlet.list">门店管理</a></li>
                 <li><a ui-sref="dashboard.realtor.list">经纪人管理</a></li>
                 <li><a ui-sref="dashboard.user.list">用户管理</a></li>
+                <li><a ui-sref="dashboard.role.list">角色管理</a></li>
                 <!--<li><a ui-sref="buying">着急买</a></li>-->
                 <!--<li><a ui-sref="selling">着急卖</a></li>-->
                 <!--<li><a ui-sref="repository">我的仓库</a></li>-->
@@ -36,20 +37,24 @@
 </nav>
 
 <div class="clearfix">
-    <aside class="sidebar">
-        <nav class="sidebar-nav">
-            <div ui-view="sidebar"></div>
-        </nav>
-    </aside>
-    <section class="content">
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-body" ng-cloak="">
-                    <!-- 主要内容区域 -->
-                    <div ui-view="content"></div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-2">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <div ui-view="sidebar"></div>
+                </nav>
+            </aside>
         </div>
-    </section>
+        <div class="col-md-10">
+            <section class="content">
+                <div class="panel panel-default">
+                    <div class="panel-body" ng-cloak="">
+                        <!-- 主要内容区域 -->
+                        <div ui-view="content"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 </div>
 

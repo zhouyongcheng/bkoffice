@@ -10,13 +10,16 @@ require.config({
         restangular : 'bower_components/restangular/dist/restangular.min',
         angularJwt : 'bower_components/angular-jwt/dist/angular-jwt.min',
         angularLocalStorage : 'bower_components/angular-local-storage/dist/angular-local-storage.min',
+        multiSelect: 'bower_components/isteven-angular-multiselect/isteven-multi-select',
         metisMenu: 'bower_components/metisMenu/dist/metisMenu.min',
-        bootstrapTpls: 'bower_components/angular-ui-bootstrap/ui-bootstrap-tpls.0.11.2',
+        uiBootstrap: 'bower_components/angular-bootstrap/ui-bootstrap.min',
+        uiBootstrapTpls: 'bower_components/angular-bootstrap/ui-bootstrap-tpls',
         prettify: 'bower_components/prettify/prettify.1.0.1',
         treeControl: 'bower_components/angular-tree-control/angular-tree-control',
         loginModule : 'modules/login/loginModule',
         dashboardModule : 'modules/dashboard/dashboardModule',
         userModule: 'modules/user/userModule',
+        roleModule: 'modules/role/roleModule',
         organizationModule: 'modules/organization/organizationModule',
         serviceModule: 'modules/service/serviceModule',
         distributorModule: 'modules/distributor/distributorModule',
@@ -57,10 +60,16 @@ require.config({
         angularLocalStorage : {
             deps : ['angular']
         },
+        multiSelect: {
+            deps : ['angular']
+        },
         metisMenu : {
             deps : ['twitter']
         },
-        bootstrapTpls : {
+        uiBootstrap : {
+          deps : ['twitter', 'angular']
+        },
+        uiBootstrapTpls : {
             deps : ['twitter','angular']
         },
         treeControl: {
@@ -81,7 +90,9 @@ require([
     'app',
     'domReady',
     'metisMenu',
-    'bootstrapTpls',
+    'multiSelect',
+    'uiBootstrap',
+    'uiBootstrapTpls',
     'prettify',
     'treeControl'
 ], function($, angular, app,domReady) {
