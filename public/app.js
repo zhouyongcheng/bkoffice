@@ -167,8 +167,12 @@ define([
                 // 创建代理店
                 .state('dashboard.distributor.add', {
                     url: '/add',
-                    templateUrl: 'modules/distributor/distributor.add.html',
-                    controller: 'DistributorAddController'
+                    views : {
+                        'content@dashboard' : {
+                            templateUrl: 'modules/distributor/distributor.add.html',
+                            controller: 'DistributorAddController'
+                        }
+                    }
                 })
                 // 给代理店添加成员，角色及访问控制的等情报
                 .state('dashboard.distributor.edit', {
@@ -190,6 +194,17 @@ define([
                         }
                     }
                 })
+                // 添加用户
+                .state('dashboard.distributor.edit.userlist', {
+                    url: '/userlist',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/user/user.list.html',
+                            controller: 'UserListController'
+                        }
+                    }
+                })
+
                 // 门店管理机能
                 .state('dashboard.outlet', {
                     url: '/outlet',
@@ -210,17 +225,15 @@ define([
                 })
                 // 用户管理机能
                 .state('dashboard.user', {
-                    url: '/user',
-                    views : {
-                        'content' : {
-                            abstract: true,
-                            template: '<ui-view />'
-                        }
-                    }
+                    url: '/user'
                 }).state('dashboard.user.list', {
                     url: '/list',
-                    templateUrl: 'modules/user/user.list.html',
-                    controller: 'UserListController'
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/user/user.list.html',
+                            controller: 'UserListController'
+                        }
+                    }
                 }).state('dashboard.user.edit', {
                     url: '/edit/:id',
                     templateUrl: 'modules/user/user.edit.html',
