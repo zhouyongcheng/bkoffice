@@ -64,7 +64,7 @@ define([
             return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
+            RestangularProvider.setBaseUrl("http://192.168.0.12:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('sessionInjector');
@@ -149,31 +149,46 @@ define([
                     templateUrl: 'modules/service/service.add.html',
                     controller: 'ServiceAddController'
                 })
+
                 // 代理店管理机能
                 .state('dashboard.distributor', {
-                    url: '/distributor',
+                    url: '/distributor'
+                })
+                // 代理店一览机能
+                .state('dashboard.distributor.list', {
+                    url: '/list',
                     views : {
-                        'sidebar' : {
-                            controller:'OrganizationController',
-                            templateUrl: 'modules/organization/sidebar.html'
-                        },
-                        'content' : {
-                            abstract: true,
-                            template: '<ui-view />'
+                        'content@dashboard' : {
+                            templateUrl: 'modules/distributor/distributor.list.html',
+                            controller: 'DistributorListController'
                         }
                     }
-                }).state('dashboard.distributor.list', {
-                    url: '/list',
-                    templateUrl: 'modules/distributor/distributor.list.html',
-                    controller: 'DistributorListController'
-                }).state('dashboard.distributor.edit', {
-                    url: '/edit/:id',
-                    templateUrl: 'modules/distributor/distributor.edit.html',
-                    controller: 'DistributorEditController'
-                }).state('dashboard.distributor.add', {
+                })
+                // 创建代理店
+                .state('dashboard.distributor.add', {
                     url: '/add',
                     templateUrl: 'modules/distributor/distributor.add.html',
                     controller: 'DistributorAddController'
+                })
+                // 给代理店添加成员，角色及访问控制的等情报
+                .state('dashboard.distributor.edit', {
+                    url: '/edit/:id',
+                    views : {
+                        'sidebar@dashboard': {
+                            templateUrl: 'modules/distributor/distributor.sidebar.html',
+                            controller: 'DistributorEditController'
+                        }
+                    }
+                })
+                // 显示代理店的基本情报
+                .state('dashboard.distributor.edit.basic', {
+                    url: '/basic',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/distributor/distributor.basic.html',
+                            controller: 'DistributorEditController'
+                        }
+                    }
                 })
                 // 门店管理机能
                 .state('dashboard.outlet', {

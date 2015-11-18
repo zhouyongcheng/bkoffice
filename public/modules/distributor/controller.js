@@ -12,8 +12,8 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             });
 
             $scope.edit = function(_id) {
-                $state.go('distributor.edit', {id:_id});
-            }
+                $state.go('dashboard.distributor.edit.basic', {id:_id});
+            };
 
             $scope.delete = function(_id) {
                 Restangular.one('/distributor',_id).remove().then(function() {
@@ -58,22 +58,30 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
                 $state.go('dashboard.distributor.list');
             }
         }).controller('DistributorEditController', function($scope,$state,Restangular,$stateParams) {
-
-            console.log("distributor_id = " + $stateParams.id);
-
-            Restangular.one("/distributor", $stateParams.id).get().then(function(distributor) {
-                $scope.distributor = distributor;
+            // 获取代理店的详细情报
+            Restangular.one("/distributor/details", $stateParams.id).get().then(function(distributor) {
+                $scope.distributor = distributor.result;
             });
 
-            $scope.save = function () {
-                $scope.distributor.save().then(function(res) {
-                    $scope.message = res.message;
-                    $state.transitionTo('distributor.list');
-                });
+            // 显示代理店的基本情报
+            $scope.doBasic = function() {
+                $state.go('dashboard.distributor.edit.basic', {id:$scope.distributor._id});
             };
 
-            $scope.back = function() {
-                $state.go('distributor.list');
+            // 给代理店添加用户
+            $scope.doAddUser = function() {
+                $state.go('dashboard.user.add', {id:$scope.distributor._id});
             };
+
+            // 给代理店添加角色，角色权限及角色用户
+            $scope.doAddRole = function() {
+                $state.go('dashboard.role.add', {id:$scope.distributor._id});
+            };
+
+            // 设定节点的访问控制
+            $scope.doAddPerms = function() {
+                $state.go('dashboard.role.add', {id:$scope.distributor._id});
+            };
+
         });
 });
