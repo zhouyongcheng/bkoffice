@@ -12,7 +12,7 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             });
 
             $scope.edit = function(_id) {
-                $state.go('dashboard.distributor.edit.basic', {id:_id});
+                $state.go('dashboard.distributor.config.basic', {id:_id});
             };
 
             $scope.delete = function(_id) {
@@ -65,22 +65,18 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
 
             // 显示代理店的基本情报
             $scope.doBasic = function() {
-                $state.go('dashboard.distributor.edit.basic', {id:$scope.distributor._id});
+                $state.go('dashboard.distributor.config.basic', {id:$scope.distributor._id});
             };
+
 
             // 给代理店添加用户
             $scope.doAddUser = function() {
-                $state.go('dashboard.user.add', {id:$scope.distributor._id});
+                $state.go('dashboard.user.list', {id:$scope.distributor._id});
             };
 
             // 给代理店添加角色，角色权限及角色用户
             $scope.doAddRole = function() {
-                $state.go('dashboard.role.add', {id:$scope.distributor._id});
-            };
-
-            // 设定节点的访问控制
-            $scope.doAddPerms = function() {
-                $state.go('dashboard.role.add', {id:$scope.distributor._id});
+                $state.go('dashboard.user.add', {id:$scope.distributor._id});
             };
 
         });
