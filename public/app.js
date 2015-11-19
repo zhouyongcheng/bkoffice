@@ -64,7 +64,7 @@ define([
             return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.12:3041/");
+            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('sessionInjector');
@@ -153,27 +153,27 @@ define([
 
                 // 用户一栏机能
                 .state('dashboard.distributor.config.listUser', {
-                    url:'^/user/:category/:node_id/list',
+                    url:'/user/:category/:node_id/list',
                     templateUrl: 'modules/user/user.list.html',
                     controller: 'UserListController'
                 })
 
                 // 节点上添加用户
                 .state('dashboard.distributor.config.addUser', {
-                    url:'^/user/:category/:node_id/add',
+                    url:'/user/:category/:node_id/add',
                     templateUrl: 'modules/user/user.add.html',
                     controller: 'UserAddController'
                 })
                 // 节点的角色一栏机能
                 .state('dashboard.distributor.config.listRole', {
-                    url:'^/role/:category/:node_id/list',
+                    url:'/role/:category/:node_id/list',
                     templateUrl: 'modules/role/role.list.html',
                     controller: 'RoleListController'
                 })
 
                 // 节点上添加角色
                 .state('dashboard.distributor.config.addRole', {
-                    url:'^/role/:category/:node_id/add',
+                    url:'/role/:category/:node_id/add',
                     templateUrl: 'modules/role/role.add.html',
                     controller: 'RoleAddController'
                 })

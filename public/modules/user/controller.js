@@ -24,23 +24,15 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
 
             };
 
-        }).controller('UserAddController', function($scope,$state,Restangular, $stateParams) {
-            $scope.category = $stateParams.category;
-            $scope.node_id = $stateParams.node_id;
-
-            console.log("**********UserAddController**********");
-            console.log("category = "+ $scope.category);
-            console.log("node_id = " + $scope.node_id);
-            console.log("**********UserAddController**********");
-
+        }).controller('UserAddController', function($scope,$state,Restangular,$stateParams) {
             $scope.user = {
-                parentId : $scope.node_id,
+                parentId : $stateParams.node_id,
                 accessibility:'_PUBLIC'
             };
             $scope.create = function() {
                 Restangular.all('/user/add').post($scope.user).then(function(user) {
                     if (user) {
-                        $state.go('dashboard.'+ $scope.category +'.config.listUser', {category:'distributor', node_id:$scope.node_id});
+                        $state.go('dashboard.'+ $stateParams.category +'.config.listUser', {category:'distributor', node_id:$stateParams.node_id});
                     }
                 }, function(e) {
                     console.log(JSON.stringify(e));
@@ -48,8 +40,8 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             };
 
             $scope.back = function() {
-                $state.go('dashboard.'+ $scope.category +'.config.listUser',
-                    {category:$scope.category,node_id:$scope.node_id});
+                $state.go('dashboard.'+ $stateParams.category +'.config.listUser',
+                    {category:$stateParams.category,node_id:$stateParams.node_id});
             }
         }).controller('UserEditController', function($scope,$state,Restangular,$stateParams) {
 

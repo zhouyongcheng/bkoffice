@@ -1,25 +1,12 @@
-<table class="table table-hover table-bordered">
-    <thead>
-    <tr>
-        <th>角色姓名</th>
-        <th>登录名</th>
-        <th>手机号</th>
-        <th>
-            <a class="btn btn-sm btn-success" ui-sref="dashboard.role.add">添加角色</a>
-            <a class="btn btn-sm btn-success" ui-sref="dashboard.role.select">多选演示</a>
-            <a class="btn btn-sm btn-success" ui-sref="dashboard.role.tabset">Tabset演示</a>
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="role in roles">
-        <td>{{role.nickname}}</td>
-        <td>{{role.rolename}}</td>
-        <td>{{role.mobile}}</td>
-        <td>
-            <a class="btn btn-sm btn-danger" ng-click="delete(role._id)">删除</a>
-            <a class="btn btn-sm btn-default" ng-click="edit(role._id)">编辑</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div class="col-md-10">
+    <section class="content">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">角色一览</h3>
+            </div>
+            <div class="panel-body">
+                this is role list board
+            </div>
+        </div>
+    </section>
+</div>
