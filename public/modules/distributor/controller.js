@@ -6,12 +6,16 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
         .controller('DistributorController', function($scope) {
             $scope.message = '';
         })
-        .controller('DistributorListController', function($scope,$state,Restangular,localStorageService) {
+        .controller('DistributorListController', function($scope,$state,Restangular) {
+
             Restangular.one('/distributor/list/keyword/_/sort/name/order/ASC/limit/_').get().then(function(data) {
                 $scope.distributors = data.result;
             });
 
             $scope.edit = function(_id) {
+                console.log("----------distributor id ----------");
+                console.log("distributorId = " + _id);
+                console.log("----------distributor id ----------");
                 $state.go('dashboard.distributor.config.basic', {id:_id});
             };
 
@@ -68,16 +72,29 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
                 $state.go('dashboard.distributor.config.basic', {id:$scope.distributor._id});
             };
 
-
-            // 给代理店添加用户
-            $scope.doAddUser = function() {
-                $state.go('dashboard.user.list', {id:$scope.distributor._id});
+            // 代理店用户一览
+            $scope.listUser = function() {
+                $state.go('dashboard.distributor.config.listUser', {category:'distributor', node_id:$scope.distributor._id});
             };
 
-            // 给代理店添加角色，角色权限及角色用户
-            $scope.doAddRole = function() {
-                $state.go('dashboard.user.add', {id:$scope.distributor._id});
+            // 代理店用户添加
+            $scope.addUser = function() {
+                $state.go('dashboard.distributor.config.addUser', {category:'distributor', node_id:$scope.distributor._id});
             };
+
+            // 代理店的角色一览
+            $scope.listRole = function() {
+                $state.go('dashboard.distributor.config.listRole', {category:'distributor', node_id:$scope.distributor._id});
+            };
+
+            // 给代理店添加角色
+            $scope.addRole = function() {
+                $state.go('dashboard.distributor.config.addRole', {category:'distributor', node_id:$scope.distributor._id});
+            };
+
+            $scope.settingPermission = function() {
+                $state.go('dashboard.distributor.config.permission', {id:$scope.distributor._id});
+            }
 
         });
 });
