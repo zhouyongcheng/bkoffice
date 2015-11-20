@@ -2,42 +2,61 @@
     <section class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">添加角色</h3>
+                <h3 class="panel-title">{{node.name}}:添加角色</h3>
             </div>
             <div class="panel-body">
-                this is role add board
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="name" class="col-md-2 control-label">角色名称:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="name" id="name" class="form-control" ng-model="role.name" required="required"/>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+        <!--特权设定-->
+        <div class="panel panel-default">
+        	  <div class="panel-heading">
+        			<h3 class="panel-title">角色对节点未分配的操作控制</h3>
+        	  </div>
+        	  <div class="panel-body">
+                  <ul>
+                      <li ng-repeat="p in permissions">
+                        <div class="checkbox">
+                        	<label>
+                        		<input type="checkbox" ng-model="p.key">
+                                {{p.value}}
+                        	</label>
+                        </div>
+                      </li>
+                  </ul>
+        	  </div>
+            <div class="panel-heading">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default">添加权限</button>
+                    <button type="button" class="btn btn-default">取消权限</button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li ng-repeat="p in permissions">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="p.key">
+                                {{p.value}}
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
     </section>
 </div>
 
-            <!--<form class="form-horizontal" role="form">-->
-    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-        <!--&lt;!&ndash;<legend>添加角色</legend>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-    <!--<div class="panel panel-default">-->
-    	  <!--<div class="panel-heading">-->
-    			<!--<h3 class="panel-title">角色基本性息</h3>-->
-    	  <!--</div>-->
-    	  <!--<div class="panel-body">-->
-              <!--<div class="form-group">-->
-                  <!--<label for="parentId" class="col-md-2 control-label">所属节点:</label>-->
-
-                  <!--<div class="col-md-4">-->
-                      <!--<input type="text" name="parentId" id="parentId" class="form-control" ng-model="role.parentId" readonly/>-->
-                  <!--</div>-->
-              <!--</div>-->
-
-              <!--<div class="form-group">-->
-                  <!--<label for="name" class="col-md-2 control-label">角色名称:</label>-->
-
-                  <!--<div class="col-md-4">-->
-                      <!--<input type="text" name="name" id="name" class="form-control" ng-model="role.name" required="required"/>-->
-                  <!--</div>-->
-              <!--</div>-->
-    	  <!--</div>-->
-    <!--</div>-->
 
     <!--<div class="panel panel-default">-->
         <!--<div class="panel-heading">-->

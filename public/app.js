@@ -64,7 +64,7 @@ define([
             return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
+            RestangularProvider.setBaseUrl("http://192.168.0.12:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('sessionInjector');

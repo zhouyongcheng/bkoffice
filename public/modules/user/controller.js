@@ -10,6 +10,7 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             // 确定添加用户的节点类型及特定的节点ID
             $scope.category = $stateParams.category;
             $scope.node_id = $stateParams.node_id;
+            $scope.node_name = $stateParams.node_name;
 
             // 查询该节点下的所有用户
             Restangular.one('/user/list/parent_id/'+ $scope.node_id +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {

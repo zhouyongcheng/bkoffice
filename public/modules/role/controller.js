@@ -13,7 +13,52 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
 
             };
 
-        }).controller('RoleAddController', function($scope,$state,Restangular) {
+        }).controller('RoleAddController', function($scope,$state,Restangular, $stateParams) {
+
+            // 获取代理店的详细情报
+            Restangular.one("/" + $stateParams.category + "/details", $stateParams.node_id).get().then(function(node) {
+                $scope.node = node.result;
+            });
+
+            // 获取节点的permission情报
+            Restangular.one("/permission/get/node", $stateParams.node_id).get().then(function(permissions) {
+                $scope.permissions = [];
+
+                var perms = permissions.result;
+
+                console.log("-------------------------------------------------");
+
+                console.log("permissions = " + JSON.stringify(perms));
+
+
+
+                var CKS = {
+                    'ALL' : {key:'ALL', value:'所有权限'},
+                    'QUERY' : {key:'QUERY', value :'查看权限'},
+                    'MOD': {key:'MOD', value:'更新权限'}
+                };
+
+
+                if (perms['ALL'].length > 0) {
+                    console.log("all");
+                    for (var p in perms) {
+                        if (CKS[p] != null) {
+                            $scope.permissions.push(CKS[p]);
+                        }
+                    }
+                } else {
+                    console.log("single");
+                    for (var p in perms) {
+                        if (perms[p].length > 0 && CKS[p] != null) {
+                            $scope.permissions.push(CKS[p]);
+                        }
+                    }
+                }
+                console.log(JSON.stringify($scope.permissions));
+                console.log("-------------------------------------------------");
+
+            });
+
 
             $scope.role = {};
 
