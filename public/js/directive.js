@@ -1,4 +1,4 @@
-define(['angular','restangular'], function(angular) {
+define(['angular', 'lodash', 'restangular'], function(angular,_) {
     angular.module('atm.directives', ['restangular'])
         .directive('atmTest', function () {
             return {

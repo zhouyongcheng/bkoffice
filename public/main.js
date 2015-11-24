@@ -11,6 +11,7 @@ require.config({
         angularJwt : 'bower_components/angular-jwt/dist/angular-jwt.min',
         angularLocalStorage : 'bower_components/angular-local-storage/dist/angular-local-storage.min',
         multiSelect: 'bower_components/isteven-angular-multiselect/isteven-multi-select',
+        checklistModel:'bower_components/checklist-model/checklist-model',
         metisMenu: 'bower_components/metisMenu/dist/metisMenu.min',
         uiBootstrap: 'bower_components/angular-bootstrap/ui-bootstrap.min',
         uiBootstrapTpls: 'bower_components/angular-bootstrap/ui-bootstrap-tpls',
@@ -61,6 +62,9 @@ require.config({
             deps : ['angular']
         },
         multiSelect: {
+            deps : ['angular']
+        },
+        checklistModel : {
             deps : ['angular']
         },
         metisMenu : {

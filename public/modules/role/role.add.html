@@ -21,110 +21,20 @@
         			<h3 class="panel-title">角色对节点未分配的操作控制</h3>
         	  </div>
         	  <div class="panel-body">
-                  <ul>
-                      <li ng-repeat="p in permissions">
-                        <div class="checkbox">
-                        	<label>
-                        		<input type="checkbox" ng-model="p.key">
-                                {{p.value}}
-                        	</label>
-                        </div>
-                      </li>
-                  </ul>
+                  <div ng-repeat="p in role.available">
+                    <td><input type="checkbox" checklist-model="role.stashed" checklist-value="p.code"> {{p.label}}</td>
+                  </div>
+                  <div class="panel-footer">
+                      <button type="button" class="btn btn-default" ng-click="assigin()">添加权限</button>
+                      <button type="button" class="btn btn-default" ng-click="revoke()">取消权限</button>
+                  </div>
+                  <div ng-repeat="p in role.assigned">
+                      <input type="checkbox" checklist-model="role.stashed" checklist-value="p.code"> {{p.label}}
+                  </div>
         	  </div>
-            <div class="panel-heading">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default">添加权限</button>
-                    <button type="button" class="btn btn-default">取消权限</button>
-                </div>
-            </div>
-            <div class="panel-body">
-                <ul>
-                    <li ng-repeat="p in permissions">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" ng-model="p.key">
-                                {{p.value}}
-                            </label>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
         </div>
-
     </section>
 </div>
-
-
-
-    <!--<div class="panel panel-default">-->
-        <!--<div class="panel-heading">-->
-            <!--<h3 class="panel-title">角色对当前节点的操作权限</h3>-->
-        <!--</div>-->
-        <!--<div class="panel-body">-->
-            <!--<div class="checkbox">-->
-                <!--<label>-->
-                    <!--<input type="checkbox" value="" id="">-->
-                    <!--全部操作 （当前角色能够对所属节点进行所有操作，完全控制）-->
-                <!--</label>-->
-            <!--</div>-->
-            <!--<div class="checkbox">-->
-                <!--<label>-->
-                    <!--<input type="checkbox" value="" id="">-->
-                    <!--更改节点-->
-                <!--</label>-->
-            <!--</div>-->
-
-        <!--</div>-->
-    <!--</div>-->
-
-    <!--<uib-tabset>-->
-
-    <!--</uib-tabset>-->
-
-
-    <!--<div class="panel panel-default">-->
-        <!--<div class="panel-heading">-->
-            <!--<h3 class="panel-title">对当前角色的操作控制设定</h3>-->
-        <!--</div>-->
-        <!--<div class="panel-body">-->
-
-            <!--<div class="checkbox">-->
-                <!--<label>-->
-                    <!--<input type="checkbox" value="" id="">-->
-                    <!--全部操作 （对该角色进行任何操作）-->
-                <!--</label>-->
-            <!--</div>-->
-            <!--<div class="checkbox">-->
-                <!--<label>-->
-                    <!--<input type="checkbox" value="" id="">-->
-                    <!--禁止和启用 （可禁止或启用该角色）-->
-                <!--</label>-->
-            <!--</div>-->
-            <!--<div class="checkbox">-->
-                <!--<label>-->
-                    <!--<input type="checkbox" value="" id="">-->
-                    <!--公开（启用并查看该角色的详细情报）-->
-                <!--</label>-->
-            <!--</div>-->
-            <!--<div class="checkbox">-->
-                <!--<label>-->
-                    <!--<input type="checkbox" value="" id="">-->
-                    <!--管理角色权限 （给角色添加，收回操作节点的权限）-->
-                <!--</label>-->
-            <!--</div>-->
-            <!--<div class="checkbox">-->
-                <!--<label>-->
-                    <!--<input type="checkbox" value="" id="">-->
-                    <!--管理角色成员(可添加，移除角色包含的成员）-->
-                <!--</label>-->
-            <!--</div>-->
-
-        <!--</div>-->
-    <!--</div>-->
-
-<!--</form>-->
 
 
 

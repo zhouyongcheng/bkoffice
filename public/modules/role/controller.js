@@ -1,5 +1,29 @@
-define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
-    angular.module('roleControllers', ['restangular','ui.router', 'LocalStorageModule'])
+define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], function(angular,_) {
+    angular.module('roleControllers', ['restangular','ui.router', 'LocalStorageModule', 'checklist-model'])
+        .constant(
+            "_PERMISSION" , {
+                ALL: '全部操作',
+                QUERY: '查询',
+                MOD: '更新',
+                DEL: '禁止',
+                ADD: '添加节点',
+                ADD_ROLE: '添加角色',
+                ADD_BRANCH: '添加下级组织',
+                ADD_FORUM: '添加论坛',
+                ADD_CUSTOMER: '添加客户',
+                RELATION: '关系操作',
+                RELATION_JOIN: '加入关系',
+                RELATION_JOIN_REQ: '加入请求',
+                RELATION_FOLLOW: '关注',
+                RELATION_FOLLOW_REQ: '关注请求',
+                ENTRY: '条目操作',
+                ENTRY_QUERY: '条目查询',
+                ENTRY_POST: '发布条目',
+                ENTRY_MOD: '条目发布',
+                ENTRY_DEL: '条目删除',
+                ENTRY_CMT: '条目注释'
+            }
+        )
         .controller('RoleController', function($scope) {
             $scope.message = '';
         })
@@ -13,54 +37,66 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
 
             };
 
-        }).controller('RoleAddController', function($scope,$state,Restangular, $stateParams) {
+        }).controller('RoleAddController', function($scope,$state,Restangular,$stateParams,_PERMISSION) {
+
+            $scope.role = {
+                available : [],
+                assigned : [],
+                stashed:[]
+            };
 
             // 获取代理店的详细情报
             Restangular.one("/" + $stateParams.category + "/details", $stateParams.node_id).get().then(function(node) {
                 $scope.node = node.result;
+                _.forEach($scope.node.permission, function(v, k) {
+                    if (v === true && _PERMISSION[k]) {
+                        $scope.role.available.push({
+                            code: k,
+                            label: _PERMISSION[k]
+                        });
+                    }
+                })
             });
 
-            // 获取节点的permission情报
-            Restangular.one("/permission/get/node", $stateParams.node_id).get().then(function(permissions) {
-                $scope.permissions = [];
+            // 分配特权
+            $scope.assigin = function() {
+                // 给assigned分配数据
+                _.forEach($scope.role.stashed, function(k) {
+                   $scope.role.assigned.push({
+                       code: k,
+                       label: _PERMISSION[k]
+                   });
+                });
 
-                var perms = permissions.result;
-
-                console.log("-------------------------------------------------");
-
-                console.log("permissions = " + JSON.stringify(perms));
-
-
-
-                var CKS = {
-                    'ALL' : {key:'ALL', value:'所有权限'},
-                    'QUERY' : {key:'QUERY', value :'查看权限'},
-                    'MOD': {key:'MOD', value:'更新权限'}
-                };
-
-
-                if (perms['ALL'].length > 0) {
-                    console.log("all");
-                    for (var p in perms) {
-                        if (CKS[p] != null) {
-                            $scope.permissions.push(CKS[p]);
-                        }
+                // 移除availale的数据
+                _.remove($scope.role.available, function(m) {
+                    var index = $scope.role.stashed.indexOf(m.code);
+                    if (index >= 0) {
+                        return true;
                     }
-                } else {
-                    console.log("single");
-                    for (var p in perms) {
-                        if (perms[p].length > 0 && CKS[p] != null) {
-                            $scope.permissions.push(CKS[p]);
-                        }
+                });
+                $scope.role.stashed = [];
+            };
+
+            // 取消特权
+            $scope.revoke = function() {
+                // 给assigned分配数据
+                _.forEach($scope.role.stashed, function(k) {
+                    $scope.role.available.push({
+                        code: k,
+                        label: _PERMISSION[k]
+                    });
+                });
+
+                // 移除availale的数据
+                _.remove($scope.role.assigned, function(m) {
+                    var index = $scope.role.stashed.indexOf(m.code);
+                    if (index >= 0) {
+                        return true;
                     }
-                }
-                console.log(JSON.stringify($scope.permissions));
-                console.log("-------------------------------------------------");
-
-            });
-
-
-            $scope.role = {};
+                });
+                $scope.role.stashed = [];
+            };
 
             $scope.create = function() {
 
