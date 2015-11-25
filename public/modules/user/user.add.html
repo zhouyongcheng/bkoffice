@@ -11,7 +11,6 @@
 
                     <div class="form-group">
                         <label for="username" class="col-sm-2 control-label text-right">登录账号：</label>
-
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="username" ng-model="user.username">
                         </div>
@@ -25,12 +24,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="nickname" class="col-sm-2 control-label text-right">姓名：</label>
+                        <label for="name" class="col-sm-2 control-label text-right">姓名：</label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="nickname" ng-model="user.nickname">
+                            <input type="text" class="form-control" id="name" ng-model="user.name">
                         </div>
                     </div>
+
+                    <atm-gender gender="user.gender"></atm-gender>
 
                     <div class="form-group">
                         <label for="password" class="col-sm-2 control-label text-right">密码：</label>

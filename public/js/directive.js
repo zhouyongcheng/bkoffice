@@ -12,7 +12,24 @@ define(['angular', 'lodash', 'restangular'], function(angular,_) {
                     });
                 }
             };
-        }).directive('atmLocation', function (Restangular) {
+        })
+        .directive('atmGender', function () {
+            return {
+                restrict: 'AE',
+                replace: true,
+                templateUrl: 'js/template/gender.html',
+                scope: {
+                    gender : '='
+                },
+                link: function (scope, elem, attr) {
+                    scope.genders = [
+                        {code:'_MALE', label:'男'},
+                        {code:'_FEMALE', label:'女'}
+                    ];
+                }
+            };
+        })
+        .directive('atmLocation', function (Restangular) {
             return {
                 restrict: 'AE',
                 replace: true,

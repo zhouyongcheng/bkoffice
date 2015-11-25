@@ -64,7 +64,7 @@ define([
             return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.12:3041/");
+            RestangularProvider.setBaseUrl("http://192.168.0.47:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('sessionInjector');
@@ -176,6 +176,12 @@ define([
                     url:'/role/:category/:node_id/add',
                     templateUrl: 'modules/role/role.add.html',
                     controller: 'RoleAddController'
+                })
+                // 给角色添加用户
+                .state('dashboard.distributor.config.roleUser', {
+                    url:'/role/:role_id/node/:node_id',
+                    templateUrl: 'modules/role/role.user.html',
+                    controller: 'RoleUserController'
                 })
 
                 //.state('dashboard.user.list', {

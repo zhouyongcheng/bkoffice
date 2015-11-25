@@ -27,22 +27,103 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
         .controller('RoleController', function($scope) {
             $scope.message = '';
         })
-        .controller('RoleListController', function($scope,$state,Restangular) {
+        // 角色一览画面机能
+        .controller('RoleListController', function($scope,$state,$stateParams,Restangular,localStorageService) {
+            var token = localStorageService.get('token');
+            Restangular.one('/roles/token/'+ token +'/pid/' + $stateParams.node_id).get().then(function (data) {
+                // 获取当前登录用户能看到的角色
+                console.log("===============角色一览begin======================");
+                console.log(JSON.stringify(data.result));
+                console.log("===============角色一览end======================");
+                $scope.roles = data.result;
+            });
 
-            $scope.edit = function(_id) {
-                $state.go('dashboard.role.edit', {id:_id});
-            };
-
-            $scope.delete = function(_id) {
-
-            };
-
-        }).controller('RoleAddController', function($scope,$state,Restangular,$stateParams,_PERMISSION) {
-
-            $scope.role = {
+            // 给角色添加用户
+            $scope.addUser = function(rid, nid) {
+                $state.go('dashboard.distributor.config.roleUser', {role_id:rid, node_id:nid});
+            }
+        })
+        // 给角色添加用户
+        .controller('RoleUserController', function ($scope,$state,$stateParams,Restangular,localStorageService) {
+            // 获得当前节点的所有用户
+            //$scope.category = $stateParams.category;
+            //$scope.node_name = $stateParams.node_name;
+            $scope.users = {
                 available : [],
                 assigned : [],
-                stashed:[]
+                stashed : []
+            };
+            // 查询该节点下的所有用户
+            Restangular.one('/user/list/parent_id/'+ $stateParams.node_id +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {
+                $scope.users.available = data.result;
+            });
+
+            // 分配用户给角色
+            $scope.assigin = function() {
+                // 给assigned分配用户
+                _.forEach($scope.users.stashed, function(id) {
+                    $scope.users.assigned.push(
+                        _.find($scope.users.available, {_id:id})
+                    );
+                });
+
+                // 移除availale中的已经被分配用户
+                _.remove($scope.users.available, function(u) {
+                    var index = $scope.users.stashed.indexOf(u._id);
+                    if (index >= 0) {
+                        return true;
+                    }
+                });
+                $scope.users.stashed = [];
+            };
+
+            // 移除角色中的用户
+            $scope.revoke = function() {
+                // 把移除的用户添加到可分配的用户列表中
+                _.forEach($scope.users.stashed, function(id) {
+                    $scope.users.available.push(
+                        _.find($scope.users.assigned, {_id:id})
+                    );
+                });
+                // 把用户从以分配的列表中移除
+                _.remove($scope.users.assigned, function(u) {
+                    var index = $scope.users.stashed.indexOf(u._id);
+                    if (index >= 0) {
+                        return true;
+                    }
+                });
+                $scope.users.stashed = [];
+            };
+
+            // 把分配的用户情报更新到角色中
+            $scope.confirm = function() {
+                console.log("========添加用户到角色开始===========");
+                _.forEach($scope.users.assigned, function(user) {
+                    var relation = {
+                        ownerId : user._id,
+                        nodeId : $stateParams.role_id
+                    };
+                    Restangular.all('/role/join').post(relation).then(function(data) {
+                        console.log(JSON.stringify(data));
+                    });
+                });
+                console.log("========添加用户到角色完成===========");
+            }
+        })
+        // 创建角色
+        .controller('RoleAddController', function($scope,$state,Restangular,$stateParams,localStorageService, _PERMISSION) {
+
+            // 获取用户登录时的token值
+            var token = localStorageService.get('token');
+
+            $scope.role = {
+                parentId : $stateParams.node_id,
+                name:'',           //角色的名称
+                type:'',           //角色的类型
+                permissions : [],  //最终角色获得的权限
+                available : [],    //可分配的权限
+                assigned : [],     //已经分配的权限
+                stashed:[]         //选择出待分配的权限
             };
 
             // 获取代理店的详细情报
@@ -97,21 +178,31 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
                 });
                 $scope.role.stashed = [];
             };
-
+            // 创建角色
             $scope.create = function() {
-
+                var parameters = {
+                    parentId: $stateParams.node_id,
+                    name: $scope.role.name,
+                    //type: $scope.role.type,
+                    privileges: _.pluck($scope.role.assigned, "code")
+                };
+                // 创建当前节点下面的角色
+                Restangular.all('/role/create/token/' + token).post(parameters).then(function(data) {
+                    // 跳转到角色一览画面
+                    $state.go('dashboard.distributor.config.listRole', $stateParams.node_id);
+                });
             };
-
             $scope.back = function() {
-                $state.go('dashboard.role.list');
+                $state.go('dashboard.distributor.config.listRole', $stateParams.node_id);
             }
+
         }).controller('RoleEditController', function($scope,$state,Restangular,$stateParams) {
             $scope.save = function () {
-                $state.transitionTo('dashboard.role.list');
+                $state.transitionTo('dashboard.distributor.config.listRole');
             };
 
             $scope.back = function() {
-                $state.go('dashboard.role.list');
+                $state.go('dashboard.distributor.config.listRole');
             };
         }).controller('RoleMultiController', function($scope) {
 

@@ -1,0 +1,10 @@
+<div class="form-group">
+	<label for="gender" class="col-sm-2 control-label">性别</label>
+	<div class="col-md-4">
+        <select name="gender" id="gender" class="form-control"
+                ng-model="gender"
+                ng-options="g.code as g.label for g in genders">
+            <option value=""> -- 请选择 -- </option>
+        </select>
+	</div>
+</div>
