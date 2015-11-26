@@ -46,16 +46,28 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
         // 给角色添加用户
         .controller('RoleUserController', function ($scope,$state,$stateParams,Restangular,localStorageService) {
             // 获得当前节点的所有用户
-            //$scope.category = $stateParams.category;
-            //$scope.node_name = $stateParams.node_name;
             $scope.users = {
                 available : [],
                 assigned : [],
                 stashed : []
             };
+
             // 查询该节点下的所有用户
             Restangular.one('/user/list/parent_id/'+ $stateParams.node_id +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {
                 $scope.users.available = data.result;
+            });
+
+            console.log("role_id = " + $stateParams.role_id);
+
+            // 获取当前角色的成员列表
+            Restangular.one('/role/' + $stateParams.role_id + '/members').get().then(function (data) {
+                var members = data.result;
+                _.forEach(members, function(u) {
+                    $scope.users.assigned.push(u);
+                    _.remove($scope.users.available, function(o) {
+                        return u._id === o._id;
+                    });
+                });
             });
 
             // 分配用户给角色

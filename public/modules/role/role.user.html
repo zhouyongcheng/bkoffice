@@ -2,22 +2,28 @@
     <section class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">角色对节点未分配的操作控制</h3>
+                <h3 class="panel-title">未加入到角色中的用户</h3>
             </div>
             <div class="panel-body">
                 <div ng-repeat="u in users.available">
                     <td><input type="checkbox" checklist-model="users.stashed" checklist-value="u._id"> {{u.name}}</td>
                 </div>
-                <div class="panel-footer">
-                    <button type="button" class="btn btn-default" ng-click="assigin()">添加用户</button>
-                    <button type="button" class="btn btn-default" ng-click="revoke()">移除用户</button>
-                </div>
+            </div>
+        </div>
+
+        <div style="padding-bottom: 20px; margin: 0 30%">
+            <button type="button" class="btn btn-default" ng-click="assigin()">添加用户</button>
+            <button type="button" class="btn btn-default" ng-click="revoke()">移除用户</button>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">已经加入到角色中的用户</h3>
+            </div>
+            <div class="panel-body">
                 <div ng-repeat="u in users.assigned">
                     <input type="checkbox" checklist-model="users.stashed" checklist-value="u._id"> {{u.name}}
                 </div>
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="confirm()">添加用户</button>
             </div>
         </div>
     </section>
