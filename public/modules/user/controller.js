@@ -9,11 +9,11 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
         .controller('UserListController', function($scope,$state,Restangular, $stateParams) {
             // 确定添加用户的节点类型及特定的节点ID
             $scope.category = $stateParams.category;
-            $scope.node_id = $stateParams.node_id;
+            $scope.nid = $stateParams.nid;
             $scope.node_name = $stateParams.node_name;
 
             // 查询该节点下的所有用户
-            Restangular.one('/user/list/parent_id/'+ $scope.node_id +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {
+            Restangular.one('/user/list/parent_id/'+ $scope.nid +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {
                 $scope.users = data.result;
             });
 
@@ -27,13 +27,13 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
 
         }).controller('UserAddController', function($scope,$state,Restangular,$stateParams) {
             $scope.user = {
-                parentId : $stateParams.node_id,
+                parentId : $stateParams.nid,
                 accessibility:'_PUBLIC'
             };
             $scope.create = function() {
                 Restangular.all('/user/add').post($scope.user).then(function(user) {
                     if (user) {
-                        $state.go('dashboard.'+ $stateParams.category +'.config.listUser', {category:'distributor', node_id:$stateParams.node_id});
+                        $state.go('dashboard.config.listUser', {category:$stateParams.category, nid:$stateParams.nid});
                     }
                 }, function(e) {
                     console.log(JSON.stringify(e));
@@ -42,7 +42,7 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
 
             $scope.back = function() {
                 $state.go('dashboard.'+ $stateParams.category +'.config.listUser',
-                    {category:$stateParams.category,node_id:$stateParams.node_id});
+                    {category:$stateParams.category,nid:$stateParams.nid});
             }
         }).controller('UserEditController', function($scope,$state,Restangular,$stateParams) {
 

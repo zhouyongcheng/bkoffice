@@ -1,0 +1,75 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建开发商</h3>
+    </div>
+    <div class="panel-body">
+        <div class="message">
+            {{message}}
+        </div>
+        <form class="form-horizontal" role="form">
+            <!--省，市，区-->
+            <atm-location province="developer.address.state" city="developer.address.city"
+                          district="developer.address.district"></atm-location>
+
+            <!--详细地址-->
+            <div class="form-group">
+                <label for="text" class="col-md-2 control-label text-right">详细地址</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="text" ng-model="developer.text">
+                </div>
+            </div>
+
+            <!--开发商名称-->
+            <div class="form-group">
+                <label for="name" class="col-md-2 control-label text-right">开发商名称</label>
+
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="name" ng-model="developer.name">
+                </div>
+            </div>
+
+            <!--开发商简称-->
+            <div class="form-group">
+                <label for="shortName" class="col-md-2 control-label text-right">开发商简称</label>
+
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="shortName" ng-model="developer.shortName">
+                </div>
+            </div>
+
+            <!--描述-->
+            <div class="form-group">
+                <label for="description" class="col-md-2 control-label text-right">描述</label>
+
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="description" ng-model="developer.description">
+                </div>
+            </div>
+
+            <!--手机-->
+            <div class="form-group">
+                <label for="mobile" class="col-md-2 control-label text-right">手机</label>
+
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="mobile" ng-model="developer.mobile">
+                </div>
+            </div>
+
+            <!--座机-->
+            <div class="form-group">
+                <label for="tel" class="col-md-2 control-label text-right">座机</label>
+
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="tel" ng-model="developer.tel">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-2">
+                    <button type="submit" class="btn btn-success" ng-click="create()">添加</button>
+                    <button type="submit" class="btn btn-success" ng-click="back()">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

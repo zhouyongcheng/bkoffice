@@ -1,6 +1,6 @@
 define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
 
-    angular.module('dashboardControllers', ['restangular','ui.router', 'LocalStorageModule'])
+    angular.module('dashboardControllers', ['restangular','ui.router', 'LocalStorageModule','developerModule'])
         .controller('DashboardController', function($scope,$state,Restangular,localStorageService) {
 
             $scope.logout = function() {

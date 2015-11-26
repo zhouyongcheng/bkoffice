@@ -24,6 +24,7 @@ require.config({
         organizationModule: 'modules/organization/organizationModule',
         serviceModule: 'modules/service/serviceModule',
         distributorModule: 'modules/distributor/distributorModule',
+        developerModule: 'modules/developer/developerModule',
         outletModule: 'modules/outlet/outletModule',
         realtorModule: 'modules/realtor/realtorModule',
         masterModule: 'modules/master/masterModule',

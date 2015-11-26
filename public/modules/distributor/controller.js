@@ -84,7 +84,7 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             $scope.listUser = function() {
                 $state.go('dashboard.distributor.config.listUser', {
                     category:'distributor',
-                    node_id:$scope.distributor._id
+                    nid:$scope.distributor._id
                 });
             };
 
@@ -92,7 +92,7 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             $scope.addUser = function() {
                 $state.go('dashboard.distributor.config.addUser', {
                     category:'distributor',
-                    node_id:$scope.distributor._id
+                    nid:$scope.distributor._id
                 });
             };
 
@@ -100,7 +100,7 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             $scope.listRole = function() {
                 $state.go('dashboard.distributor.config.listRole', {
                     category:'distributor',
-                    node_id:$scope.distributor._id
+                    nid:$scope.distributor._id
                 });
             };
 
@@ -108,7 +108,7 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             $scope.addRole = function() {
                 $state.go('dashboard.distributor.config.addRole', {
                     category:'distributor',
-                    node_id:$scope.distributor._id
+                    nid:$scope.distributor._id
                 });
             };
 
