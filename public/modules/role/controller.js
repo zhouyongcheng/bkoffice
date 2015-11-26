@@ -42,22 +42,25 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
             $scope.addUser = function(rid, nid) {
                 $state.go('dashboard.distributor.config.roleUser', {role_id:rid, node_id:nid});
             }
+
+            // 显示角色的详细情报
+            $scope.detail = function(rid, nid) {
+
+            }
         })
         // 给角色添加用户
         .controller('RoleUserController', function ($scope,$state,$stateParams,Restangular,localStorageService) {
+
             // 获得当前节点的所有用户
             $scope.users = {
                 available : [],
                 assigned : [],
                 stashed : []
             };
-
             // 查询该节点下的所有用户
             Restangular.one('/user/list/parent_id/'+ $stateParams.node_id +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {
                 $scope.users.available = data.result;
             });
-
-            console.log("role_id = " + $stateParams.role_id);
 
             // 获取当前角色的成员列表
             Restangular.one('/role/' + $stateParams.role_id + '/members').get().then(function (data) {
@@ -72,55 +75,43 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
 
             // 分配用户给角色
             $scope.assigin = function() {
+                var relation = {
+                    ownerId : '',
+                    nodeId : $stateParams.role_id
+                };
                 // 给assigned分配用户
                 _.forEach($scope.users.stashed, function(id) {
-                    $scope.users.assigned.push(
-                        _.find($scope.users.available, {_id:id})
-                    );
-                });
-
-                // 移除availale中的已经被分配用户
-                _.remove($scope.users.available, function(u) {
-                    var index = $scope.users.stashed.indexOf(u._id);
-                    if (index >= 0) {
-                        return true;
-                    }
+                    var u = _.find($scope.users.available, {_id:id});
+                    relation.ownerId = u._id;
+                    Restangular.all('/role/join').post(relation).then(function(data) {
+                        $scope.users.assigned.push(u);
+                    });
+                    _.remove($scope.users.available, function(o) {
+                        return o._id === id;
+                    });
                 });
                 $scope.users.stashed = [];
             };
 
             // 移除角色中的用户
             $scope.revoke = function() {
+                var relation = {
+                    ownerId : '',
+                    nodeId : $stateParams.role_id
+                };
                 // 把移除的用户添加到可分配的用户列表中
                 _.forEach($scope.users.stashed, function(id) {
-                    $scope.users.available.push(
-                        _.find($scope.users.assigned, {_id:id})
-                    );
-                });
-                // 把用户从以分配的列表中移除
-                _.remove($scope.users.assigned, function(u) {
-                    var index = $scope.users.stashed.indexOf(u._id);
-                    if (index >= 0) {
-                        return true;
-                    }
+                    var u = _.find($scope.users.assigned, {_id:id});
+                    relation.ownerId = u._id;
+                    Restangular.all('/role/leave').post(relation).then(function(data) {
+                        $scope.users.available.push(u);
+                    });
+                    _.remove($scope.users.assigned, function(o) {
+                        return o._id === id;
+                    });
                 });
                 $scope.users.stashed = [];
             };
-
-            // 把分配的用户情报更新到角色中
-            $scope.confirm = function() {
-                console.log("========添加用户到角色开始===========");
-                _.forEach($scope.users.assigned, function(user) {
-                    var relation = {
-                        ownerId : user._id,
-                        nodeId : $stateParams.role_id
-                    };
-                    Restangular.all('/role/join').post(relation).then(function(data) {
-                        console.log(JSON.stringify(data));
-                    });
-                });
-                console.log("========添加用户到角色完成===========");
-            }
         })
         // 创建角色
         .controller('RoleAddController', function($scope,$state,Restangular,$stateParams,localStorageService, _PERMISSION) {
