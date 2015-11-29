@@ -30,21 +30,21 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
         // 角色一览画面机能
         .controller('RoleListController', function($scope,$state,$stateParams,Restangular,localStorageService) {
             var token = localStorageService.get('token');
-            Restangular.one('/roles/token/'+ token +'/pid/' + $stateParams.node_id).get().then(function (data) {
+            Restangular.one('/roles/token/'+ token +'/pid/' + $stateParams.nid).get().then(function (data) {
                 // 获取当前登录用户能看到的角色
-                console.log("===============角色一览begin======================");
-                console.log(JSON.stringify(data.result));
-                console.log("===============角色一览end======================");
                 $scope.roles = data.result;
             });
 
             // 给角色添加用户
-            $scope.addUser = function(rid, nid) {
-                $state.go('dashboard.distributor.config.roleUser', {role_id:rid, node_id:nid});
-            }
+            $scope.addUser = function(rid, node_id) {
+                $state.go('dashboard.'+ $stateParams.category +'.config.roleUser', {
+                    role_id:rid,
+                    nid:node_id
+                });
+            };
 
             // 显示角色的详细情报
-            $scope.detail = function(rid, nid) {
+            $scope.detail = function(rid, node_id) {
 
             }
         })
@@ -58,7 +58,7 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
                 stashed : []
             };
             // 查询该节点下的所有用户
-            Restangular.one('/user/list/parent_id/'+ $stateParams.node_id +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {
+            Restangular.one('/user/list/parent_id/'+ $stateParams.nid +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {
                 $scope.users.available = data.result;
             });
 
@@ -120,7 +120,7 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
             var token = localStorageService.get('token');
 
             $scope.role = {
-                parentId : $stateParams.node_id,
+                parentId : $stateParams.nid,
                 name:'',           //角色的名称
                 type:'',           //角色的类型
                 permissions : [],  //最终角色获得的权限
@@ -130,7 +130,7 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
             };
 
             // 获取代理店的详细情报
-            Restangular.one("/" + $stateParams.category + "/details", $stateParams.node_id).get().then(function(node) {
+            Restangular.one("/" + $stateParams.category + "/details", $stateParams.nid).get().then(function(node) {
                 $scope.node = node.result;
                 _.forEach($scope.node.permission, function(v, k) {
                     if (v === true && _PERMISSION[k]) {
@@ -184,7 +184,7 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
             // 创建角色
             $scope.create = function() {
                 var parameters = {
-                    parentId: $stateParams.node_id,
+                    parentId: $stateParams.nid,
                     name: $scope.role.name,
                     //type: $scope.role.type,
                     privileges: _.pluck($scope.role.assigned, "code")
@@ -192,41 +192,32 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
                 // 创建当前节点下面的角色
                 Restangular.all('/role/create/token/' + token).post(parameters).then(function(data) {
                     // 跳转到角色一览画面
-                    $state.go('dashboard.distributor.config.listRole', $stateParams.node_id);
+                    $state.go('dashboard.config.listRole', {
+                        category:$stateParams.category,
+                        nid:$stateParams.nid
+                    });
                 });
             };
             $scope.back = function() {
-                $state.go('dashboard.distributor.config.listRole', $stateParams.node_id);
+                $state.go('dashboard.config.listRole', {
+                    category:$stateParams.category,
+                    nid:$stateParams.nid
+                });
             }
 
         }).controller('RoleEditController', function($scope,$state,Restangular,$stateParams) {
             $scope.save = function () {
-                $state.transitionTo('dashboard.distributor.config.listRole');
+                $state.go('dashboard.config.listRole', {
+                    category:$stateParams.category,
+                    nid:$stateParams.nid
+                });
             };
 
             $scope.back = function() {
-                $state.go('dashboard.distributor.config.listRole');
-            };
-        }).controller('RoleMultiController', function($scope) {
-
-            $scope.modernBrowsers = [
-                { icon: "<img src=[..]/opera.png.. />",               name: "全部操作", maker: "(对节点的全部操作)",        ticked: true  },
-                { icon: "<img src=[..]/internet_explorer.png.. />",   name: "更新",    maker: "(更新节点的操作)",             ticked: false },
-                { icon: "<img src=[..]/firefox-icon.png.. />",        name: "删除",    maker: "(删除节点的操作)",    ticked: true  },
-                { icon: "<img src=[..]/safari_browser.png.. />",      name: "查询",    maker: "(查询节点详细的操作)",                 ticked: false },
-                { icon: "<img src=[..]/chrome.png.. />",              name: "添加",    maker: "(添加子节点的操作)",                ticked: true  }
-            ];
-
-        }).controller('RoleTabsController', function() {
-            $scope.tabs = [
-                { title:'Dynamic Title 1', content:'Dynamic content 1' },
-                { title:'Dynamic Title 2', content:'Dynamic content 2', disabled: true }
-            ];
-
-            $scope.alertMe = function() {
-                setTimeout(function() {
-                    $window.alert('You\'ve selected the alert tab!');
+                $state.go('dashboard.config.listRole', {
+                    category:$stateParams.category,
+                    nid:$stateParams.nid
                 });
             };
-        });
+        })
 });

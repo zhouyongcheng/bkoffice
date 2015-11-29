@@ -26,14 +26,21 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             };
 
         }).controller('UserAddController', function($scope,$state,Restangular,$stateParams) {
+            $scope.node_name = $stateParams.node_name;
             $scope.user = {
                 parentId : $stateParams.nid,
                 accessibility:'_PUBLIC'
             };
             $scope.create = function() {
                 Restangular.all('/user/add').post($scope.user).then(function(user) {
+                    console.log("-----------创建用户begin-------------");
+                    console.log(JSON.stringify(user));
+                    console.log("-----------创建用户end-------------");
                     if (user) {
-                        $state.go('dashboard.config.listUser', {category:$stateParams.category, nid:$stateParams.nid});
+                        $state.go('dashboard.config.listUser', {
+                            category:$stateParams.category,
+                            nid:$stateParams.nid
+                        });
                     }
                 }, function(e) {
                     console.log(JSON.stringify(e));
@@ -46,6 +53,7 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             }
         }).controller('UserEditController', function($scope,$state,Restangular,$stateParams) {
 
+            $scope.node_name = $stateParams.node_name;
 
             $scope.save = function () {
                 $state.transitionTo('dashboard.user.list');

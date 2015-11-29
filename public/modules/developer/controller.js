@@ -42,6 +42,7 @@ define(['angular', 'lodash', 'uiRouter','angularLocalStorage'], function(angular
 
         // 编辑开发商页面控制器
         }).controller('developerEditController', function($scope,$state,Restangular,$stateParams) {
+
             // 获取开发商的详细情报
             Restangular.one("/developer/details", $stateParams.nid).get().then(function(developer) {
                 $scope.developer = developer.result;
@@ -49,14 +50,19 @@ define(['angular', 'lodash', 'uiRouter','angularLocalStorage'], function(angular
 
             // 显示开发商的基本情报
             $scope.doBasic = function() {
-                $state.go('dashboard.config.basic',{category:'developer'});
+                $state.go('dashboard.config.basic',{
+                    category:'developer',
+                    nid:$scope.developer._id,
+                    node_name:$scope.developer.name
+                });
             };
 
             // 代理店用户一览
             $scope.listUser = function() {
                 $state.go('dashboard.config.listUser', {
                     category:'developer',
-                    nid:$scope.developer._id
+                    nid:$scope.developer._id,
+                    node_name:$scope.developer.name
                 });
             };
 
@@ -64,7 +70,8 @@ define(['angular', 'lodash', 'uiRouter','angularLocalStorage'], function(angular
             $scope.addUser = function() {
                 $state.go('dashboard.config.addUser', {
                     category:'developer',
-                    nid:$scope.developer._id
+                    nid:$scope.developer._id,
+                    node_name:$scope.developer.name
                 });
             };
 
@@ -72,7 +79,8 @@ define(['angular', 'lodash', 'uiRouter','angularLocalStorage'], function(angular
             $scope.listRole = function() {
                 $state.go('dashboard.config.listRole', {
                     category:'developer',
-                    nid:$scope.developer._id
+                    nid:$scope.developer._id,
+                    node_name:$scope.developer.name
                 });
             };
 
@@ -80,12 +88,17 @@ define(['angular', 'lodash', 'uiRouter','angularLocalStorage'], function(angular
             $scope.addRole = function() {
                 $state.go('dashboard.config.addRole', {
                     category:'developer',
-                    nid:$scope.developer._id
+                    nid:$scope.developer._id,
+                    node_name:$scope.developer.name
                 });
             };
 
             $scope.settingPermission = function() {
-                $state.go('dashboard.config.permission', {id:$scope.developer._id});
-            }
+                $state.go('dashboard.config.permission', {
+                    category:'developer',
+                    nid:$scope.developer._id,
+                    node_name:$scope.developer.name
+                });
+            };
         });
 });
