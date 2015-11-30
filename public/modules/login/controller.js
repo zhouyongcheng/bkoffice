@@ -5,7 +5,9 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             $scope.login = function() {
                 Restangular.all('/signin').post($scope.user).then(function(data) {
                     localStorageService.set('token', data.result);
-                    //$state.transitionTo('dashboard.service.list');
+                    console.log("login user information begin");
+                    console.log(JSON.stringify(data));
+                    console.log("login user information end");
                     $state.transitionTo('dashboard.distributor.list');
                 }, function(e) {
                     console.log("error occurs" + e);

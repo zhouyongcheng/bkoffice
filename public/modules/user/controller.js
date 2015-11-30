@@ -35,6 +35,9 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
             // 创建用户
             $scope.create = function() {
                 Restangular.all('/user/add').post($scope.user).then(function(user) {
+                    console.log("-----------创建用户begin-------------");
+                    console.log(JSON.stringify(user));
+                    console.log("-----------创建用户end-------------");
                     if (user) {
                         $state.go('dashboard.config.listUser', {
                             category:$stateParams.category,
@@ -53,6 +56,9 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
                 });
             }
         }).controller('UserEditController', function($scope,$state,Restangular,$stateParams) {
+
+            $scope.node_name = $stateParams.node_name;
+
             $scope.save = function () {
                 $state.go('dashboard.config.listUser', {
                     category:$stateParams.category,

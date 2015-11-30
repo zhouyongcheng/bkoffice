@@ -30,7 +30,13 @@
 </nav>
 
 <div class="clearfix">
-    <div ui-view="sidebar" />
+    <div class="col-md-2">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div ui-view="sidebar" />
+            </nav>
+        </aside>
+    </div>
     <div ui-view="content" />
 </div>
 

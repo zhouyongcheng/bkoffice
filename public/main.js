@@ -10,7 +10,6 @@ require.config({
         restangular : 'bower_components/restangular/dist/restangular.min',
         angularJwt : 'bower_components/angular-jwt/dist/angular-jwt.min',
         angularLocalStorage : 'bower_components/angular-local-storage/dist/angular-local-storage.min',
-        multiSelect: 'bower_components/isteven-angular-multiselect/isteven-multi-select',
         checklistModel:'bower_components/checklist-model/checklist-model',
         metisMenu: 'bower_components/metisMenu/dist/metisMenu.min',
         uiBootstrap: 'bower_components/angular-bootstrap/ui-bootstrap.min',
@@ -62,9 +61,6 @@ require.config({
         angularLocalStorage : {
             deps : ['angular']
         },
-        multiSelect: {
-            deps : ['angular']
-        },
         checklistModel : {
             deps : ['angular']
         },
@@ -95,7 +91,6 @@ require([
     'app',
     'domReady',
     'metisMenu',
-    'multiSelect',
     'uiBootstrap',
     'uiBootstrapTpls',
     'prettify',
@@ -109,8 +104,11 @@ require([
                 toggle: false
             });
             $('#menu3').metisMenu({
-                doubleTapToGo: true
+                toggle: false
             });
+            //$('#menu3').metisMenu({
+            //    doubleTapToGo: true
+            //});
             $('#menu4').metisMenu();
         });
         angular.bootstrap(document, ['portal']);

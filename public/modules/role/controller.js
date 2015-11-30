@@ -44,10 +44,12 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
                     role_id : rid,
                     nid : nid,
                     category : $stateParams.category
+
                 });
             };
 
             // 显示角色的详细情报
+
             $scope.detail = function(rid) {
                 $state.go('dashboard.config.roleDetails', {
                     role_id:rid,
@@ -200,23 +202,23 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
                 // 创建当前节点下面的角色
                 Restangular.all('/role/create/token/' + token).post(parameters).then(function(data) {
                     // 跳转到角色一览画面
-                    $state.go('dashboard.config.listRole',{
-                        category: $stateParams.category,
+                    $state.go('dashboard.config.listRole', {
+                        category:$stateParams.category,
                         nid:$stateParams.nid
                     });
                 });
             };
             $scope.back = function() {
-                $state.go('dashboard.config.listRole',{
-                    category: $stateParams.category,
+                $state.go('dashboard.config.listRole', {
+                    category:$stateParams.category,
                     nid:$stateParams.nid
                 });
             }
 
         }).controller('RoleEditController', function($scope,$state,Restangular,$stateParams) {
             $scope.save = function () {
-                $state.go('dashboard.config.listRole',{
-                    category: $stateParams.category,
+                $state.go('dashboard.config.listRole', {
+                    category:$stateParams.category,
                     nid:$stateParams.nid
                 });
             };
@@ -251,26 +253,4 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
                 });
             }
         })
-        .controller('RoleMultiController', function($scope) {
-
-            $scope.modernBrowsers = [
-                { icon: "<img src=[..]/opera.png.. />",               name: "全部操作", maker: "(对节点的全部操作)",        ticked: true  },
-                { icon: "<img src=[..]/internet_explorer.png.. />",   name: "更新",    maker: "(更新节点的操作)",             ticked: false },
-                { icon: "<img src=[..]/firefox-icon.png.. />",        name: "删除",    maker: "(删除节点的操作)",    ticked: true  },
-                { icon: "<img src=[..]/safari_browser.png.. />",      name: "查询",    maker: "(查询节点详细的操作)",                 ticked: false },
-                { icon: "<img src=[..]/chrome.png.. />",              name: "添加",    maker: "(添加子节点的操作)",                ticked: true  }
-            ];
-
-        }).controller('RoleTabsController', function() {
-            $scope.tabs = [
-                { title:'Dynamic Title 1', content:'Dynamic content 1' },
-                { title:'Dynamic Title 2', content:'Dynamic content 2', disabled: true }
-            ];
-
-            $scope.alertMe = function() {
-                setTimeout(function() {
-                    $window.alert('You\'ve selected the alert tab!');
-                });
-            };
-        });
 });
