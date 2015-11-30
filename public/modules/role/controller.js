@@ -29,23 +29,30 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
         })
         // 角色一览画面机能
         .controller('RoleListController', function($scope,$state,$stateParams,Restangular,localStorageService) {
+            $scope.node_name = $stateParams.node_name;
+            // 获取当前用户的登录token
             var token = localStorageService.get('token');
-            Restangular.one('/roles/token/'+ token +'/pid/' + $stateParams.node_id).get().then(function (data) {
-                // 获取当前登录用户能看到的角色
-                console.log("===============角色一览begin======================");
-                console.log(JSON.stringify(data.result));
-                console.log("===============角色一览end======================");
+
+            // 获取当前登录用户在当前节点能看到的角色
+            Restangular.one('/roles/token/'+ token +'/pid/' + $stateParams.nid).get().then(function (data) {
                 $scope.roles = data.result;
             });
 
-            // 给角色添加用户
+            // 给角色添加当前节点下的用户
             $scope.addUser = function(rid, nid) {
-                $state.go('dashboard.distributor.config.roleUser', {role_id:rid, node_id:nid});
-            }
+                $state.go('dashboard.config.roleUser', {
+                    role_id : rid,
+                    nid : nid,
+                    category : $stateParams.category
+                });
+            };
 
             // 显示角色的详细情报
-            $scope.detail = function(rid, nid) {
-
+            $scope.detail = function(rid) {
+                $state.go('dashboard.config.roleDetails', {
+                    role_id:rid,
+                    category:$stateParams.category
+                });
             }
         })
         // 给角色添加用户
@@ -58,7 +65,7 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
                 stashed : []
             };
             // 查询该节点下的所有用户
-            Restangular.one('/user/list/parent_id/'+ $stateParams.node_id +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {
+            Restangular.one('/user/list/parent_id/'+ $stateParams.nid +'/keyword/_/sort/name/order/ASC/skip/_/limit/_').get().then(function(data) {
                 $scope.users.available = data.result;
             });
 
@@ -120,8 +127,9 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
             var token = localStorageService.get('token');
 
             $scope.role = {
-                parentId : $stateParams.node_id,
+                parentId : $stateParams.nid,
                 name:'',           //角色的名称
+                category:'role',   //角色的类型
                 type:'',           //角色的类型
                 permissions : [],  //最终角色获得的权限
                 available : [],    //可分配的权限
@@ -130,7 +138,7 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
             };
 
             // 获取代理店的详细情报
-            Restangular.one("/" + $stateParams.category + "/details", $stateParams.node_id).get().then(function(node) {
+            Restangular.one("/" + $stateParams.category + "/details", $stateParams.nid).get().then(function(node) {
                 $scope.node = node.result;
                 _.forEach($scope.node.permission, function(v, k) {
                     if (v === true && _PERMISSION[k]) {
@@ -184,30 +192,66 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
             // 创建角色
             $scope.create = function() {
                 var parameters = {
-                    parentId: $stateParams.node_id,
+                    parentId: $stateParams.nid,
                     name: $scope.role.name,
-                    //type: $scope.role.type,
+                    type: $scope.role.type,
                     privileges: _.pluck($scope.role.assigned, "code")
                 };
                 // 创建当前节点下面的角色
                 Restangular.all('/role/create/token/' + token).post(parameters).then(function(data) {
                     // 跳转到角色一览画面
-                    $state.go('dashboard.distributor.config.listRole', $stateParams.node_id);
+                    $state.go('dashboard.config.listRole',{
+                        category: $stateParams.category,
+                        nid:$stateParams.nid
+                    });
                 });
             };
             $scope.back = function() {
-                $state.go('dashboard.distributor.config.listRole', $stateParams.node_id);
+                $state.go('dashboard.config.listRole',{
+                    category: $stateParams.category,
+                    nid:$stateParams.nid
+                });
             }
 
         }).controller('RoleEditController', function($scope,$state,Restangular,$stateParams) {
             $scope.save = function () {
-                $state.transitionTo('dashboard.distributor.config.listRole');
+                $state.go('dashboard.config.listRole',{
+                    category: $stateParams.category,
+                    nid:$stateParams.nid
+                });
             };
 
             $scope.back = function() {
-                $state.go('dashboard.distributor.config.listRole');
+                $state.go('dashboard.config.listRole',{
+                    category: $stateParams.category,
+                    nid:$stateParams.nid
+                });
             };
-        }).controller('RoleMultiController', function($scope) {
+        })
+        // 角色详细情报
+        .controller('RoleDetailsController', function($scope,$state,Restangular,$stateParams,_PERMISSION) {
+            console.log('role_id = ' + $stateParams.role_id);
+            Restangular.one('/roles/details/' + $stateParams.role_id).get().then(function(data) {
+                $scope.role = data.result;
+                $scope.privileges = [];
+                $scope.permissions = [];
+                if ($scope.role && $scope.role.privileges) {
+                    _.forEach($scope.role.privileges, function(p) {
+                        console.log(p);
+                        $scope.privileges.push(_.at(_PERMISSION, p));
+                    });
+                }
+            });
+
+            // 返回到角色一览画面
+            $scope.back = function() {
+                $state.go('dashboard.config.listRole',{
+                    category: $stateParams.category,
+                    nid:$stateParams.nid
+                });
+            }
+        })
+        .controller('RoleMultiController', function($scope) {
 
             $scope.modernBrowsers = [
                 { icon: "<img src=[..]/opera.png.. />",               name: "全部操作", maker: "(对节点的全部操作)",        ticked: true  },

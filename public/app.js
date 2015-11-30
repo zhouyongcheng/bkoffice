@@ -66,7 +66,7 @@ define([
             return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
+            RestangularProvider.setBaseUrl("http://192.168.0.47:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('sessionInjector');
@@ -94,7 +94,7 @@ define([
                     templateUrl: 'modules/dashboard/dashboard.html',
                     controller : 'DashboardController'
                 })
-                // 显示各个节点的基本情报基本设定
+                // 显示各个节点的基本情报基本设定[共通机能]
                 .state('dashboard.config', {
                     url:'/config/:category/:nid',
                     views : {
@@ -166,7 +166,7 @@ define([
                 })
                 // 给角色添加用户
                 .state('dashboard.config.roleUser', {
-                    url:'/role/:role_id/node/:nid',
+                    url:'/role/:role_id/node/:nid/:category',
                     views : {
                         'content@dashboard' : {
                             templateUrl: 'modules/role/role.user.html',
@@ -174,6 +174,17 @@ define([
                         }
                     }
                 })
+                // 显示角色的详细情报
+                .state('dashboard.config.roleDetails', {
+                    url:'/role/:role_id/:category',
+                    views : {
+                        'content@dashboard' : {
+                            templateUrl: 'modules/role/role.details.html',
+                            controller: 'RoleDetailsController'
+                        }
+                    }
+                })
+
 
             /**************************
                  *     代理店管理模块       *
@@ -237,36 +248,43 @@ define([
 
                 // 用户一栏机能
                 .state('dashboard.distributor.config.listUser', {
-                    url:'/user/:category/:nid/list',
+                    url:'/user/:category/:nid/:node_name/list',
                     templateUrl: 'modules/user/user.list.html',
                     controller: 'UserListController'
                 })
 
                 // 节点上添加用户
                 .state('dashboard.distributor.config.addUser', {
-                    url:'/user/:category/:nid/add',
+                    url:'/user/:category/:nid/:node_name/add',
                     templateUrl: 'modules/user/user.add.html',
                     controller: 'UserAddController'
                 })
                 // 节点的角色一栏机能
                 .state('dashboard.distributor.config.listRole', {
-                    url:'/role/:category/:nid/list',
+                    url:'/role/:category/:nid/:node_name/list',
                     templateUrl: 'modules/role/role.list.html',
                     controller: 'RoleListController'
                 })
 
                 // 节点上添加角色
                 .state('dashboard.distributor.config.addRole', {
-                    url:'/role/:category/:nid/add',
+                    url:'/role/:category/:nid/:node_name/add',
                     templateUrl: 'modules/role/role.add.html',
                     controller: 'RoleAddController'
                 })
                 // 给角色添加用户
                 .state('dashboard.distributor.config.roleUser', {
-                    url:'/role/:role_id/node/:nid',
+                    url:'/role/:role_id/node/:nid/:node_name',
                     templateUrl: 'modules/role/role.user.html',
                     controller: 'RoleUserController'
                 })
+                // 角色的详细情报
+                .state('dashboard.distributor.config.roleDetails', {
+                    url:'/role/:role_id/:node_name',
+                    templateUrl: 'modules/role/role.details.html',
+                    controller: 'RoleDetailsController'
+                })
+
 
             /**************************
              *     开发商管理模块       *

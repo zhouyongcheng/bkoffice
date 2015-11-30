@@ -2,7 +2,7 @@
     <section class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">角色一览</h3>
+                <h3 class="panel-title">{{node_name}}:角色一览</h3>
             </div>
             <div class="panel-body">
                 <table class="table table-bordered">
@@ -21,7 +21,7 @@
                             <td>{{role._id}}</td>
                             <td>
                                <input type="button" class="btn btn-sm btn-success" value="添加用户" ng-click="addUser(role._id, role.parentId)"/>
-                                <input type="button" class="btn btn-sm btn-default" value="详细" ng-click="detail(role._id, role.parentId)"/>
+                                <input type="button" class="btn btn-sm btn-default" value="详细" ng-click="detail(role._id)"/>
                             </td>
                 		</tr>
                 	</tbody>
