@@ -34,7 +34,7 @@ define(['angular','lodash','uiRouter','angularLocalStorage', 'checklistModel'], 
             var token = localStorageService.get('token');
 
             // 获取当前登录用户在当前节点能看到的角色
-            Restangular.one('/roles/token/'+ token +'/pid/' + $stateParams.nid).get().then(function (data) {
+            Restangular.one('/roles/' + $stateParams.nid).get().then(function (data) {
                 $scope.roles = data.result;
             });
 

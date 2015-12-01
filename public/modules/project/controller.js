@@ -1,10 +1,10 @@
 define(['angular','lodash'], function(angular,_) {
-    angular.module('projectControllers', [])
+    angular.module('projectControllers', ['ui.bootstrap'])
         .controller('projectController', ['$scope', function($scope) {
             $scope.title = 'project management'
         }])
+        // 楼盘一览功能
         .controller('projectListController', ['$scope', function($scope) {
-            $scope.title = 'project management'
         }])
         .controller('projectAddController', ['$scope', function($scope) {
             $scope.title = 'project management'
