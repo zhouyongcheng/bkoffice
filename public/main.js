@@ -34,6 +34,7 @@ require.config({
         allianceModule : 'modules/alliance/allianceModule',
         uploadModule : 'modules/upload/uploadModule',
         projectModule : 'modules/project/projectModule',
+        systemModule:'modules/system/systemModule',
         ngFileUpload : 'bower_components/angular-file-upload/dist/angular-file-upload.min',
         fileUploadShim : 'bower_components/ng-file-upload/ng-file-upload-shim.min',
         fileUpload : 'bower_components/ng-file-upload/ng-file-upload.min'

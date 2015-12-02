@@ -25,6 +25,7 @@ define([
     'allianceModule',
     'masterModule',
     'projectModule',
+    'systemModule',
     'uploadModule'
 ], function(angular) {
     return angular.module('portal',
@@ -51,6 +52,7 @@ define([
          'sellingModule',
          'repositoryModule',
          'allianceModule',
+         'systemModule',
          'uploadModule'
         ])
         .factory('sessionInjector', function(localStorageService) {
@@ -85,6 +87,53 @@ define([
                     templateUrl: 'modules/dashboard/dashboard.html',
                     controller : 'DashboardController'
                 })
+                // 系统设置机能
+                .state('dashboard.system', {
+                    url:'/system',
+                    views : {
+                        sidebar: {
+                            templateUrl: 'modules/system/sidebar.html'
+                        }
+                    }
+                })
+                // 用户一览机能
+                .state('dashboard.system.users', {
+                    url:'/users',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/system/system.users.html'
+                        }
+                    }
+                })
+                // 角色一览机能
+                .state('dashboard.system.roles', {
+                    url:'/roles',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/system/system.roles.html'
+                        }
+                    }
+                })
+                // 添加用户
+                .state('dashboard.system.adduser', {
+                    url:'/adduser',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/system/system.adduser.html'
+                        }
+                    }
+                })
+                // 添加角色
+                .state('dashboard.system.addrole', {
+                    url:'/addrole',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/system/system.addrole.html'
+                        }
+                    }
+                })
+
+
                 // 显示各个节点的基本情报基本设定[共通机能]
                 // 设置dashboard的sidebar共通导航菜单
                 // 菜单根据传入的category和node_id，动态的分配controller和context的template内容
@@ -147,7 +196,6 @@ define([
                         }
                     }
                 })
-
                 // 节点上添加角色
                 .state('dashboard.config.addRole', {
                     url:'/role/add/:node_name',
@@ -178,8 +226,6 @@ define([
                         }
                     }
                 })
-
-
                 /**************************
                  *     代理店管理模块       *
                  **************************/
@@ -196,9 +242,9 @@ define([
                 })
                 // 代理店一览机能
                 .state('dashboard.distributor.list', {
+                    url: '/list',
                     views : {
                         sub_content: {
-                            url: '/list',
                             templateUrl: 'modules/distributor/distributor.list.html',
                             controller: 'distributorListController'
                         }
@@ -206,67 +252,52 @@ define([
                 })
                 // 创建代理店
                 .state('dashboard.distributor.add', {
+                    url: '/add',
                     views : {
                         sub_content: {
-                            url: '/add',
                             templateUrl: 'modules/distributor/distributor.add.html',
                             controller: 'distributorAddController'
                         }
                     }
                 })
-                // 显示代理店的基本情报
-                .state('dashboard.distributor.config.basic', {
-                    url: '/basic',
-                    templateUrl: 'modules/distributor/distributor.basic.html',
-                    controller: 'DistributorEditController'
+            /**************************
+             *     门店管理模块       *
+             **************************/
+                .state('dashboard.outlet', {
+                    url: '/outlet',
+                    views : {
+                        sidebar: {
+                            template: '<div ui-view="sub_sidebar"></div>'
+                        },
+                        content: {
+                            template: '<div ui-view="sub_content"></div>'
+                        }
+                    }
                 })
-                // 设定代理店的访问控制情报
-                .state('dashboard.distributor.config.permission', {
-                    url: '/permission',
-                    templateUrl: 'modules/distributor/distributor.permission.html',
-                    controller: 'DistributorEditController'
+                // 门店一览机能
+                .state('dashboard.outlet.list', {
+                    url: '/list',
+                    views : {
+                        sub_content: {
+                            templateUrl: 'modules/outlet/outlet.list.html',
+                            controller: 'outletListController'
+                        }
+                    }
                 })
-
-                // 用户一栏机能
-                .state('dashboard.distributor.config.listUser', {
-                    url:'/user/:category/:nid/:node_name/list',
-                    templateUrl: 'modules/user/user.list.html',
-                    controller: 'UserListController'
-                })
-
-                // 节点上添加用户
-                .state('dashboard.distributor.config.addUser', {
-                    url:'/user/:category/:nid/:node_name/add',
-                    templateUrl: 'modules/user/user.add.html',
-                    controller: 'UserAddController'
-                })
-                // 节点的角色一栏机能
-                .state('dashboard.distributor.config.listRole', {
-                    url:'/role/:category/:nid/:node_name/list',
-                    templateUrl: 'modules/role/role.list.html',
-                    controller: 'RoleListController'
-                })
-
-                // 节点上添加角色
-                .state('dashboard.distributor.config.addRole', {
-                    url:'/role/:category/:nid/:node_name/add',
-                    templateUrl: 'modules/role/role.add.html',
-                    controller: 'RoleAddController'
-                })
-                // 给角色添加用户
-                .state('dashboard.distributor.config.roleUser', {
-                    url:'/role/:role_id/node/:nid/:node_name',
-                    templateUrl: 'modules/role/role.user.html',
-                    controller: 'RoleUserController'
-                })
-                // 角色的详细情报
-                .state('dashboard.distributor.config.roleDetails', {
-                    url:'/role/:role_id/:node_name',
-                    templateUrl: 'modules/role/role.details.html',
-                    controller: 'RoleDetailsController'
+                // 创建门店
+                .state('dashboard.outlet.add', {
+                    url: '/add',
+                    views : {
+                        sub_content: {
+                            templateUrl: 'modules/outlet/outlet.add.html',
+                            controller: 'outletAddController'
+                        }
+                    }
                 })
 
-                // 楼盘管理
+            /**************************
+             *     楼盘管理模块       *
+             **************************/
                 .state('dashboard.project', {
                     url: '/project',
                     views : {
@@ -280,83 +311,24 @@ define([
                 })
                 // 楼盘一览机能
                 .state('dashboard.project.list', {
+                    url: '/list',
                     views : {
                         sub_content: {
-                            url: '/list',
                             templateUrl: 'modules/project/project.list.html',
                             controller: 'projectListController'
                         }
                     }
                 })
-                // 创建代理店
+                // 创建楼盘
                 .state('dashboard.project.add', {
+                    url: '/add',
                     views : {
                         sub_content: {
-                            url: '/add',
                             templateUrl: 'modules/project/project.add.html',
                             controller: 'projectAddController'
                         }
                     }
                 })
-
-                //// 给代理店添加成员，角色及访问控制的等情报
-                //.state('dashboard.distributor.config', {
-                //    url: '/:id/config',
-                //    views : {
-                //        'sub_sidebar': {
-                //            templateUrl: 'modules/distributor/distributor.sidebar.html',
-                //            controller: 'DistributorEditController'
-                //        },
-                //        'sub_content' : {
-                //            template : '<div ui-view=""></div>'
-                //        }
-                //    }
-                //})
-                //// 显示代理店的基本情报
-                //.state('dashboard.distributor.config.basic', {
-                //    url: '/basic',
-                //    templateUrl: 'modules/distributor/distributor.basic.html',
-                //    controller: 'DistributorEditController'
-                //})
-                //// 设定代理店的访问控制情报
-                //.state('dashboard.distributor.config.permission', {
-                //    url: '/permission',
-                //    templateUrl: 'modules/distributor/distributor.permission.html',
-                //    controller: 'DistributorEditController'
-                //})
-                //
-                //// 用户一栏机能
-                //.state('dashboard.distributor.config.listUser', {
-                //    url:'/user/:category/:nid/list',
-                //    templateUrl: 'modules/user/user.list.html',
-                //    controller: 'UserListController'
-                //})
-                //
-                //// 节点上添加用户
-                //.state('dashboard.distributor.config.addUser', {
-                //    url:'/user/:category/:nid/add',
-                //    templateUrl: 'modules/user/user.add.html',
-                //    controller: 'UserAddController'
-                //})
-                //// 节点的角色一栏机能
-                //.state('dashboard.distributor.config.listRole', {
-                //    url:'/role/:category/:nid/list',
-                //    templateUrl: 'modules/role/role.list.html',
-                //    controller: 'RoleListController'
-                //})
-                //
-                //// 节点上添加角色
-                //.state('dashboard.distributor.config.addRole', {
-                //    url:'/role/:category/:nid/add',
-                //    templateUrl: 'modules/role/role.add.html',
-                //    controller: 'RoleAddController'
-                //})
-                //// 给角色添加用户
-                //.state('dashboard.distributor.config.roleUser', {
-                //    url:'/role/:role_id/node/:nid',
-                //    templateUrl: 'modules/role/role.user.html',
-                //    controller: 'RoleUserController'
-                //})
 
             /**************************
              *     开发商管理模块       *
@@ -392,9 +364,6 @@ define([
                         }
                     }
                 })
-
-
-
 
                 //.state('dashboard.user.list', {
                 //    url: '^dashboard/user/list',
@@ -654,6 +623,65 @@ define([
                 //        }
                 //    }
                 //})
-                ;
+                //// 给代理店添加成员，角色及访问控制的等情报
+                //.state('dashboard.distributor.config', {
+                //    url: '/:id/config',
+                //    views : {
+                //        'sub_sidebar': {
+                //            templateUrl: 'modules/distributor/distributor.sidebar.html',
+                //            controller: 'DistributorEditController'
+                //        },
+                //        'sub_content' : {
+                //            template : '<div ui-view=""></div>'
+                //        }
+                //    }
+                //})
+                //// 显示代理店的基本情报
+                //.state('dashboard.distributor.config.basic', {
+                //    url: '/basic',
+                //    templateUrl: 'modules/distributor/distributor.basic.html',
+                //    controller: 'DistributorEditController'
+                //})
+                //// 设定代理店的访问控制情报
+                //.state('dashboard.distributor.config.permission', {
+                //    url: '/permission',
+                //    templateUrl: 'modules/distributor/distributor.permission.html',
+                //    controller: 'DistributorEditController'
+                //})
+                //
+                //// 用户一栏机能
+                //.state('dashboard.distributor.config.listUser', {
+                //    url:'/user/:category/:nid/list',
+                //    templateUrl: 'modules/user/user.list.html',
+                //    controller: 'UserListController'
+                //})
+                //
+                //// 节点上添加用户
+                //.state('dashboard.distributor.config.addUser', {
+                //    url:'/user/:category/:nid/add',
+                //    templateUrl: 'modules/user/user.add.html',
+                //    controller: 'UserAddController'
+                //})
+                //// 节点的角色一栏机能
+                //.state('dashboard.distributor.config.listRole', {
+                //    url:'/role/:category/:nid/list',
+                //    templateUrl: 'modules/role/role.list.html',
+                //    controller: 'RoleListController'
+                //})
+                //
+                //// 节点上添加角色
+                //.state('dashboard.distributor.config.addRole', {
+                //    url:'/role/:category/:nid/add',
+                //    templateUrl: 'modules/role/role.add.html',
+                //    controller: 'RoleAddController'
+                //})
+                //// 给角色添加用户
+                //.state('dashboard.distributor.config.roleUser', {
+                //    url:'/role/:role_id/node/:nid',
+                //    templateUrl: 'modules/role/role.user.html',
+                //    controller: 'RoleUserController'
+                //})
+
+            ;
             }]);
 });
