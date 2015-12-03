@@ -68,7 +68,7 @@ define([
             return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.47:3041/");
+            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('sessionInjector');
@@ -345,6 +345,30 @@ define([
                         sub_content: {
                             templateUrl: 'modules/developer/developer.add.html',
                             controller: 'developerAddController'
+                        }
+                    }
+                })
+            /**************************
+             *     代理店管理模块       *
+             **************************/
+                .state('dashboard.broker', {
+                    url: '/broker',
+                    views : {
+                        sidebar: {
+                            template: '<div ui-view="sub_sidebar"></div>'
+                        },
+                        content: {
+                            template: '<div ui-view="sub_content"></div>'
+                        }
+                    }
+                })
+                // 代理店一览机能
+                .state('dashboard.broker.list', {
+                    url: '/list',
+                    views : {
+                        sub_content: {
+                            templateUrl: 'modules/broker/broker.list.html',
+                            controller: 'brokerListController'
                         }
                     }
                 })
