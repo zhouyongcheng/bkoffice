@@ -133,7 +133,6 @@ define([
                     }
                 })
 
-
                 // 显示各个节点的基本情报基本设定[共通机能]
                 // 设置dashboard的sidebar共通导航菜单
                 // 菜单根据传入的category和node_id，动态的分配controller和context的template内容
@@ -329,22 +328,7 @@ define([
                         }
                     }
                 })
-
-            /**************************
-             *     开发商管理模块       *
-             **************************/
-                .state('dashboard.developer', {
-                    url: '/developer',
-                    views : {
-                        sidebar: {
-                            template: '<div ui-view="sub_sidebar"></div>'
-                        },
-                        content: {
-                            template: '<div ui-view="sub_content"></div>'
-                        }
-                    }
-                })
-                // 代理店一览机能
+                // 开发商一览机能
                 .state('dashboard.developer.list', {
                     url: '/list',
                     views : {
@@ -383,7 +367,6 @@ define([
                 //    templateUrl: 'modules/user/user.list.html',
                 //    controller: 'UserListController'
                 //})
-
 
                 //// 组织机构机能管理
                 //.state('dashboard.organization', {
@@ -681,7 +664,6 @@ define([
                 //    templateUrl: 'modules/role/role.user.html',
                 //    controller: 'RoleUserController'
                 //})
-
             ;
             }]);
 });
