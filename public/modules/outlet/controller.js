@@ -8,6 +8,9 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
         })
         // 门店一览机能
         .controller('outletListController', function($scope,$state,Restangular) {
+
+            //var url = '/outlet/list/distributor/:distributorId/keyword/:keyword/sort/:sortBy/order/:order/limit/:limit';
+
             Restangular.one('/outlet/list/keyword/_/sort/name/order/ASC/limit/_').get().then(function(data) {
                 $scope.outlets = data.result;
             });

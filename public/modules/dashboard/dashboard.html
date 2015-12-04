@@ -16,18 +16,19 @@
             <ul class="nav navbar-nav">
                 <!--<li><a ui-sref="dashboard.organization.list">组织机构管理</a></li>-->
                 <!--<li><a ui-sref="dashboard.service.list">服务商管理</a></li>-->
-                <li ui-sref-active="active"><a ui-sref="dashboard.distributor.list">代理店管理</a></li>
-                <li ui-sref-active="active"><a ui-sref="dashboard.outlet.list">门店管理</a></li>
+                <li ui-sref-active="active"><a ui-sref="dashboard.distributor.list">加盟商管理</a></li>
+                <li ui-sref-active="active"><a ui-sref="dashboard.developer.list">开发商管理</a></li>
+                <li ui-sref-active="active"><a href="#">物业公司管理</a></li>
+
                 <!--<li><a ui-sref="dashboard.user.list">用户管理</a></li>-->
                 <!--<li><a ui-sref="dashboard.role.list">角色管理</a></li>-->
-                <li ui-sref-active="active"><a ui-sref="dashboard.developer.list">开发商管理</a></li>
+
                 <li ui-sref-active="active"><a ui-sref="dashboard.system.users">系统设置</a></li>
                 <!--<li><a ui-sref="upload">文件上传</a></li>-->
-                <li><a ng-click="logout()">退出</a></li>
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ui-sref-active="active" class="pull-right"><a ui-sref="dashboard.broker.list">测试机能</a></li>
+                <li><a ng-click="logout()">退出</a></li>
+                <li><a ui-sref="dashboard.broker.list">测试机能</a></li>
             </ul>
         </div>
     </div>

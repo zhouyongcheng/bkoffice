@@ -100,17 +100,11 @@ require([
     'use strict';
     domReady(function() {
         $(function() {
-            $('#menu').metisMenu();
-            $('#menu2').metisMenu({
-                toggle: false
-            });
-            $('#menu3').metisMenu({
-                toggle: false
-            });
-            //$('#menu3').metisMenu({
-            //    doubleTapToGo: true
+            //$('#menu').metisMenu();
+            //$('#menu2').metisMenu({
+            //    toggle: false
             //});
-            $('#menu4').metisMenu();
+
         });
         angular.bootstrap(document, ['portal']);
     });

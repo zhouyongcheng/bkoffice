@@ -1,14 +1,18 @@
 /**
  * 系统设定功能模块
  */
-define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
+define(['angular', 'jquery', 'uiRouter','angularLocalStorage'], function(angular,$) {
     angular.module('systemControllers', ['restangular','ui.router', 'LocalStorageModule'])
         .controller('systemController', function($scope) {
-            $scope.message = '';
+            $('#system_sidebar').metisMenu({
+                toggle: true
+            });
         })
         // 系统设定
         .controller('systemListController', function($scope,$state,Restangular) {
-            
+            $('#system_sidebar').metisMenu({
+                toggle: true
+            });
         })
         // 系统设定
         .controller('systemAddController', function($scope,$state,Restangular) {

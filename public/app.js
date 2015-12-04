@@ -68,7 +68,7 @@ define([
             return sessionInjector;
         })
         .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
+            RestangularProvider.setBaseUrl("http://192.168.0.47:3041/");
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
             $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('sessionInjector');
@@ -87,7 +87,9 @@ define([
                     templateUrl: 'modules/dashboard/dashboard.html',
                     controller : 'DashboardController'
                 })
-                // 系统设置机能
+            /**************************
+             *     系统设置管理模块       *
+             **************************/
                 .state('dashboard.system', {
                     url:'/system',
                     views : {
@@ -328,7 +330,20 @@ define([
                         }
                     }
                 })
-                // 开发商一览机能
+            /**************************
+             *     开发商管理模块       *
+             **************************/
+                .state('dashboard.developer', {
+                    url: '/developer',
+                    views : {
+                        sidebar: {
+                            template: '<div ui-view="sub_sidebar"></div>'
+                        },
+                        content: {
+                            template: '<div ui-view="sub_content"></div>'
+                        }
+                    }
+                })
                 .state('dashboard.developer.list', {
                     url: '/list',
                     views : {
@@ -362,7 +377,7 @@ define([
                         }
                     }
                 })
-                // 代理店一览机能
+                // 经纪人一览机能
                 .state('dashboard.broker.list', {
                     url: '/list',
                     views : {
@@ -372,6 +387,16 @@ define([
                         }
                     }
                 })
+                //// 创建经纪人
+                //.state('dashboard.developer.add', {
+                //    url: '/add',
+                //    views : {
+                //        sub_content: {
+                //            templateUrl: 'modules/developer/developer.add.html',
+                //            controller: 'developerAddController'
+                //        }
+                //    }
+                //})
 
                 //.state('dashboard.user.list', {
                 //    url: '^dashboard/user/list',
