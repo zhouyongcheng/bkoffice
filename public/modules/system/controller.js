@@ -22,5 +22,25 @@ define(['angular', 'jquery', 'uiRouter','angularLocalStorage'], function(angular
         .controller('systemEditController', function($scope,$state,Restangular,$stateParams) {
             
         })
-            
+        // 系统设定
+        .controller('systemPermsListController', function($scope,$state,Restangular,$stateParams) {
+            console.log("calling /perms/all");
+            Restangular.one('/perms/all').get().then(function(data) {
+                console.log("************all perms begin**************");
+                console.log(data);
+                console.log("************all perms end **************");
+                $scope.perms = data.result;
+            });
+        })
+        // 基础访问控制添加系统设定
+        .controller('systemPermsController', function($scope,$state,Restangular,$stateParams) {
+
+            $scope.save = function () {
+                Restangular.all('/perms/create').post($scope.perm).then(function(data) {
+                    console.log("**************************");
+                    console.log(data);
+                    console.log("**************************");
+                });
+            }
+        })
     });

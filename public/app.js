@@ -134,6 +134,26 @@ define([
                         }
                     }
                 })
+                // 添加访问控制限制基本配置
+                .state('dashboard.system.permslist', {
+                    url:'/permslist',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/system/system.permslist.html',
+                            controller: 'systemPermsListController'
+                        }
+                    }
+                })
+                // 添加访问控制限制基本配置
+                .state('dashboard.system.permsadd', {
+                    url:'/permsadd',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/system/system.permsadd.html',
+                            controller: 'systemPermsController'
+                        }
+                    }
+                })
 
                 // 显示各个节点的基本情报基本设定[共通机能]
                 // 设置dashboard的sidebar共通导航菜单
