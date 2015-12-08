@@ -1,0 +1,42 @@
+<div class="col-md-10">
+    <section class="content">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">修改访问控制</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="category" class="col-md-2 control-label">类别:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="category" id="category" class="form-control" ng-model="perm.category" required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryName" class="col-md-2 control-label">类别名称:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="categoryName" id="categoryName" class="form-control" ng-model="perm.categoryName" required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="permission" class="col-md-2 control-label">权限ID:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="permission" id="permission" class="form-control" ng-model="perm.permission" required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="permissionName" class="col-md-2 control-label">权限名称:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="permissionName" id="permissionName" class="form-control" ng-model="perm.permissionName" required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-4">
+                            <button type="button" class="btn btn-default" ng-click="save()">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>

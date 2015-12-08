@@ -1,0 +1,53 @@
+<div class="col-md-10">
+    <section class="content">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加角色</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="name" class="col-md-2 control-label">角色名称:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="name" id="name" class="form-control" ng-model="role.name" required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="type" class="col-md-2 control-label">角色描述:</label>
+                        <div class="col-md-4">
+                            <input type="text" name="description" id="type" class="form-control" ng-model="role.description"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category" class="col-sm-2 control-label">角色分类</label>
+                        <div class="col-sm-4">
+                            <select name="category" id="category" class="form-control"
+                                    ng-model="role.category"
+                                    ng-options="m.code as m.label for m in categories">
+                                <option value=""> -- 请选择 -- </option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+                <uib-accordion close-others="oneAtATime">
+                    <div ng-repeat="(k,v) in perms">
+                        <uib-accordion-group heading="{{k}}">
+                        <div ng-repeat="i in v" class="checkbox">
+                            <label>
+                                <input type="checkbox" checklist-model="role.permissions" checklist-value="i.permission"> {{i.permissionName}}
+                            </label>
+                        </div>
+                        </uib-accordion-group>
+                    </div>
+                </uib-accordion>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-5 col-md-2" style="margin-bottom: 30px">
+                    <input type="button" value="确定" class="btn btn-default" ng-click="save()"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
