@@ -8,10 +8,11 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                     <tr>
-                        <th>category</th>
-                        <th>categoryName</th>
-                        <th>permission</th>
-                        <th>permissionName</th>
+                        <th>业务分类标识</th>
+                        <th>业务分类名称</th>
+                        <th>访问控制标识</th>
+                        <th>访问控制名称</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -20,6 +21,9 @@
                         <td>{{p.categoryName}}</td>
                         <td>{{p.permission}}</td>
                         <td>{{p.permissionName}}</td>
+                        <td>
+                            <a class="btn btn-sm btn-default" ng-click="edit(p._id)">编辑</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

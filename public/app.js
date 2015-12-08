@@ -107,6 +107,15 @@ define([
                         }
                     }
                 })
+                // 添加用户
+                .state('dashboard.system.adduser', {
+                    url:'/useradd',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/system/system.useradd.html'
+                        }
+                    }
+                })
                 // 角色一览机能
                 .state('dashboard.system.roles', {
                     url:'/roles',
@@ -116,21 +125,13 @@ define([
                         }
                     }
                 })
-                // 添加用户
-                .state('dashboard.system.adduser', {
-                    url:'/adduser',
-                    views : {
-                        'content@dashboard': {
-                            templateUrl: 'modules/system/system.adduser.html'
-                        }
-                    }
-                })
                 // 添加角色
-                .state('dashboard.system.addrole', {
-                    url:'/addrole',
+                .state('dashboard.system.roleadd', {
+                    url:'/roleadd',
                     views : {
                         'content@dashboard': {
-                            templateUrl: 'modules/system/system.addrole.html'
+                            templateUrl: 'modules/system/system.roleadd.html',
+                            controller: 'systemRoleAddController'
                         }
                     }
                 })
@@ -151,6 +152,16 @@ define([
                         'content@dashboard': {
                             templateUrl: 'modules/system/system.permsadd.html',
                             controller: 'systemPermsController'
+                        }
+                    }
+                })
+                // 编辑访问控制限制基本配置
+                .state('dashboard.system.permsedit', {
+                    url:'/permsedit/:perm_id',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/system/system.permsedit.html',
+                            controller: 'systemPermsEditController'
                         }
                     }
                 })
