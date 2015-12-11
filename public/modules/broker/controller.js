@@ -24,6 +24,48 @@ define(['angular', 'lodash', 'uiRouter','angularLocalStorage'], function(angular
                 $scope.alerts.splice(index, 1);
             };
 
+            $scope.lodash = function() {
+                var privileges = {};
+
+                //var perms = [{distributor: '1'},{outlet:'2'}, {outlet:'3'}];
+                //
+                //_.forEach(perms, function(p) {
+                //    _.forOwn(p, function(value, key) {
+                //        if (privileges[key] && _.isArray(privileges[key])) {
+                //            privileges[key].push(value);
+                //        } else {
+                //            privileges[key] = [value];
+                //        }
+                //    });
+                //});
+                //
+                //console.log(JSON.stringify(privileges))
+
+                var perms = ['distributor','outlet'];
+
+                _.forEach(perms, function(p) {
+                    if (privileges[p] && _.isArray(privileges[p])) {
+                        privileges[p].push(1);
+                    } else {
+                        privileges[p] = [1];
+                    }
+                });
+                //console.log(JSON.stringify(privileges));
+
+                perms.push('distributor.add');
+
+                _.forEach(perms, function(p) {
+                    if (privileges[p] && _.isArray(privileges[p])) {
+                        privileges[p].push(2);
+                    } else {
+                        privileges[p] = [2];
+                    }
+                });
+                console.log(JSON.stringify(privileges));
+
+            };
+
+
 
 
         });
