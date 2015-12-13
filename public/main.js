@@ -37,7 +37,8 @@ require.config({
         systemModule:'modules/system/systemModule',
         ngFileUpload : 'bower_components/angular-file-upload/dist/angular-file-upload.min',
         fileUploadShim : 'bower_components/ng-file-upload/ng-file-upload-shim.min',
-        fileUpload : 'bower_components/ng-file-upload/ng-file-upload.min'
+        fileUpload : 'bower_components/ng-file-upload/ng-file-upload.min',
+        async : 'bower_components/async/dist/async.min'
     },
     shim : {
         twitter : {
@@ -82,6 +83,9 @@ require.config({
         },
         ngFileUpload : {
             deps : ['angular']
+        },
+        async : {
+            exports : 'async'
         }
     }
 });
@@ -95,7 +99,8 @@ require([
     'uiBootstrap',
     'uiBootstrapTpls',
     'prettify',
-    'treeControl'
+    'treeControl',
+    'async'
 ], function($, angular, app,domReady) {
     'use strict';
     domReady(function() {
