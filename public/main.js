@@ -101,7 +101,7 @@ require([
     'prettify',
     'treeControl',
     'async'
-], function($, angular, app,domReady) {
+], function($, angular, app, domReady) {
     'use strict';
     domReady(function() {
         $(function() {
