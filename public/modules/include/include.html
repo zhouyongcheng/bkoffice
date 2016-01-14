@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Include test page</title>
+</head>
+<body>
+<div class="btn-group">
+    <button type="button" class="btn btn-default" ng-click="change(1)">body1</button>
+    <button type="button" class="btn btn-default" ng-click="change(2)">body2</button>
+</div>
+    <ng-include src="'modules/include/header.html'"></ng-include>
+    <div ng-if="1 == key">
+    <ng-include src="'modules/include/body1.html'"></ng-include>
+    </div>
+<div ng-if="2 == key">
+    <ng-include src="'modules/include/body2.html'"></ng-include>
+</div>
+
+    <ng-include src="'modules/include/footer.html'"></ng-include>
+</body>
+</html>
