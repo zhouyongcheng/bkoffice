@@ -1,5 +1,6 @@
 require.config({
     paths : {
+        atmLogger : 'services/logger',
         jquery : 'bower_components/jquery/dist/jquery.min',
         angular : 'bower_components/angular/angular.min',
         ngResource:'bower_components/angular-resource/angular-resource.min',
@@ -35,6 +36,7 @@ require.config({
         uploadModule : 'modules/upload/uploadModule',
         projectModule : 'modules/project/projectModule',
         systemModule:'modules/system/systemModule',
+        includeModule:'modules/include/includeModule',
         ngFileUpload : 'bower_components/angular-file-upload/dist/angular-file-upload.min',
         fileUploadShim : 'bower_components/ng-file-upload/ng-file-upload-shim.min',
         fileUpload : 'bower_components/ng-file-upload/ng-file-upload.min',

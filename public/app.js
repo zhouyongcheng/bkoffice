@@ -26,6 +26,7 @@ define([
     'masterModule',
     'projectModule',
     'systemModule',
+    'includeModule',
     'uploadModule'
 ], function(angular) {
     return angular.module('portal',
@@ -53,6 +54,7 @@ define([
          'repositoryModule',
          'allianceModule',
          'systemModule',
+         'includeModule',
          'uploadModule'
         ])
         .factory('sessionInjector', function(localStorageService) {
@@ -86,6 +88,16 @@ define([
                     url: '/dashboard',
                     templateUrl: 'modules/dashboard/dashboard.html',
                     controller : 'DashboardController'
+                })
+                // 登录机能
+                .state('dashboard.include', {
+                    url: '/include',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/include/include.html',
+                            controller : 'includeController'
+                        }
+                    }
                 })
             /**************************
              *     系统设置管理模块       *

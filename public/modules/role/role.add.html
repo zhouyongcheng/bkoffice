@@ -28,14 +28,14 @@
         	  </div>
         	  <div class="panel-body">
                   <div ng-repeat="p in role.available">
-                    <td><input type="checkbox" checklist-model="role.stashed" checklist-value="p.code"> {{p.label}}</td>
+                    <label><input type="checkbox" checklist-model="role.stashed" checklist-value="p.code"> {{p.label}}</label>
                   </div>
                   <div class="panel-footer">
                       <button type="button" class="btn btn-default" ng-click="assigin()">添加权限</button>
                       <button type="button" class="btn btn-default" ng-click="revoke()">取消权限</button>
                   </div>
                   <div ng-repeat="p in role.assigned">
-                      <input type="checkbox" checklist-model="role.stashed" checklist-value="p.code"> {{p.label}}
+                      <label><input type="checkbox" checklist-model="role.stashed" checklist-value="p.code"> {{p.label}}</label>
                   </div>
         	  </div>
         </div>

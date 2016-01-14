@@ -1,6 +1,11 @@
-define(['angular', 'lodash', 'async', 'uiRouter','angularLocalStorage'], function(angular, _, async) {
+define(['angular', 'lodash', 'async', 'uiRouter','angularLocalStorage', 'atmLogger'], function(angular, _, async) {
     angular.module('brokerControllers', ['restangular', 'ui.router', 'LocalStorageModule'])
-        .controller('brokerListController', function ($scope) {
+        .controller('brokerListController', ['$scope', 'loggerService', function ($scope, loggerService) {
+
+            var privileges = {
+                key1: 'value1',
+                key2: 'value2'
+            };
 
             $scope.tooltip = {
               title : 'hello world'
@@ -24,28 +29,29 @@ define(['angular', 'lodash', 'async', 'uiRouter','angularLocalStorage'], functio
                 $scope.alerts.splice(index, 1);
             };
 
-            var inc = function(n, callback, timeout) {
-                //将参数n自增1之后的结果返回给async
-                timeout = timeout || 200;
-                setTimeout(function() {
-                    callback(null, n+1);
-                }, timeout);
-            };
+
 
             $scope.lodash = function() {
 
-                async.series([
-                    function(cb) { inc(3, cb); },
-                    function(cb) { inc(8, cb); },
-                    function(cb) { inc(2, cb); }
+                async.waterfall([
+                    function(cb) {
+                        loggerService.debug("111");
+                        cb();
+                    }, function(cb) {
+                        loggerService.debug("222");
+                        cb();
+                    }, function(cb) {
+                        loggerService.debug("333");
+                        cb(null, 'hello world');
+                    }
                 ], function(e, results) {
-                    console.log('1.1 err: ', e);
-                    console.log('1.1 results: ', results);
+                    if (e) {
+                        loggerService.error(e);
+                    } else {
+                        loggerService.debug("444" + results);
+                    }
                 });
 
-
-
-                var privileges = {};
 
                 //var perms = [{distributor: '1'},{outlet:'2'}, {outlet:'3'}];
                 //
@@ -88,5 +94,5 @@ define(['angular', 'lodash', 'async', 'uiRouter','angularLocalStorage'], functio
 
 
 
-        });
+        }]);
 });

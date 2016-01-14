@@ -5,8 +5,8 @@
                 <h3 class="panel-title">{{node_name}}未加入到角色中的用户</h3>
             </div>
             <div class="panel-body">
-                <div ng-repeat="u in users.available">
-                    <td><input type="checkbox" checklist-model="users.stashed" checklist-value="u._id"> {{u.name}}</td>
+                <div ng-repeat="u in users.available" class="checkbox-inline">
+                    <label><input type="checkbox" checklist-model="users.stashed" checklist-value="u._id"> {{u.name}}</label>
                 </div>
             </div>
         </div>
@@ -21,8 +21,8 @@
                 <h3 class="panel-title">已经加入到角色中的用户</h3>
             </div>
             <div class="panel-body">
-                <div ng-repeat="u in users.assigned">
-                    <input type="checkbox" checklist-model="users.stashed" checklist-value="u._id"> {{u.name}}
+                <div ng-repeat="u in users.assigned" class="checkbox-inline">
+                    <label><input type="checkbox" checklist-model="users.stashed" checklist-value="u._id"> {{u.name}}</label>
                 </div>
             </div>
         </div>
