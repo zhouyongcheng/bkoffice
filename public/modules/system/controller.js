@@ -1,8 +1,8 @@
 /**
  * 系统设定功能模块
  */
-define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage'], function(angular,$, _) {
-    angular.module('systemControllers', ['restangular','ui.router', 'LocalStorageModule'])
+define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLogger'], function(angular,$, _) {
+    angular.module('systemControllers', ['restangular','ui.router', 'LocalStorageModule', 'atm.logger'])
         .controller('systemController', function($scope) {
             $('#system_sidebar').metisMenu({
                 toggle: true
@@ -32,6 +32,41 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage'], functi
                 $state.go('dashboard.system.permsedit', {perm_id:id});
             }
         })
+        // 系统资源访问控制:基本访问控制设定一览
+        .controller('systemPermissionController', ['$scope', 'Restangular', 'loggerService',  function($scope, Restangular, loggerService) {
+            // 添加管理分类
+            $scope.showAdd = false;
+            $scope.validate = [];
+            $scope.category = {};
+
+            $scope.toggle = function() {
+                $scope.showAdd = !$scope.showAdd;
+            };
+
+            Restangular.one('/system/permission/query').get().then(function(result) {
+                loggerService.debug(JSON.stringify(result));
+                $scope.entries = result.result;
+            });
+
+            $scope.addCategory = function() {
+                $scope.validate = [];
+                if (_.size($scope.category.code) <= 0) {
+                    $scope.validate.push('分类编码必须输入');
+                }
+                if (_.size($scope.category.name) <= 0) {
+                    $scope.validate.push('分类名称必须输入');
+                }
+                if (_.size($scope.validate) > 0) {
+                    return;
+                }
+                // 保存当前的管理类别
+                Restangular.all('/system/permission/create').post($scope.category).then(function(result) {
+                    loggerService.debug(JSON.stringify(result));
+                });
+
+                loggerService.debug("finished calling addCategory:success");
+            }
+        }])
         // 基础访问控制添加系统设定
         .controller('systemPermsController', function($scope,$state,Restangular,$stateParams) {
             $scope.save = function () {

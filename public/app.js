@@ -147,6 +147,16 @@ define([
                         }
                     }
                 })
+                // 添加资源访问控制限基础设定
+                .state('dashboard.system.permission', {
+                    url:'/permission',
+                    views : {
+                        'content@dashboard': {
+                            templateUrl: 'modules/system/system.permission.category.html',
+                            controller: 'systemPermissionController'
+                        }
+                    }
+                })
                 // 添加访问控制限制基本配置
                 .state('dashboard.system.permslist', {
                     url:'/permslist',
