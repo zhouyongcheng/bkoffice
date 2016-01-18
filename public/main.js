@@ -11,6 +11,7 @@ require.config({
         restangular : 'bower_components/restangular/dist/restangular.min',
         angularJwt : 'bower_components/angular-jwt/dist/angular-jwt.min',
         angularLocalStorage : 'bower_components/angular-local-storage/dist/angular-local-storage.min',
+        angularModalService : 'bower_components/angular-modal-service/dst/angular-modal-service',
         checklistModel:'bower_components/checklist-model/checklist-model',
         metisMenu: 'bower_components/metisMenu/dist/metisMenu.min',
         uiBootstrap: 'bower_components/angular-bootstrap/ui-bootstrap.min',
@@ -63,6 +64,9 @@ require.config({
             deps : ['angular']
         },
         angularLocalStorage : {
+            deps : ['angular']
+        },
+        angularModalService : {
             deps : ['angular']
         },
         checklistModel : {

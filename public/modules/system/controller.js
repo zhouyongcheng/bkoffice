@@ -1,8 +1,8 @@
 /**
  * 系统设定功能模块
  */
-define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLogger'], function(angular,$, _) {
-    angular.module('systemControllers', ['restangular','ui.router', 'LocalStorageModule', 'atm.logger'])
+define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLogger', 'angularModalService'], function(angular,$, _) {
+    angular.module('systemControllers', ['restangular','ui.router', 'LocalStorageModule', 'atm.logger', 'angularModalService'])
         .controller('systemController', function($scope) {
             $('#system_sidebar').metisMenu({
                 toggle: true
@@ -33,7 +33,7 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
             }
         })
         // 系统资源访问控制:基本访问控制设定一览
-        .controller('systemPermissionController', ['$scope', 'Restangular', 'loggerService',  function($scope, Restangular, loggerService) {
+        .controller('systemPermissionController', ['$scope', 'Restangular', 'loggerService', '$uibModal',  function($scope, Restangular, loggerService,$uibModal) {
             // 添加管理分类
             $scope.showAdd = false;
             $scope.validate = [];
@@ -48,6 +48,9 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
                 $scope.entries = result.result;
             });
 
+            /**
+             * 添加访问控制的管理类别
+             */
             $scope.addCategory = function() {
                 $scope.validate = [];
                 if (_.size($scope.category.code) <= 0) {
@@ -65,7 +68,39 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
                 });
 
                 loggerService.debug("finished calling addCategory:success");
-            }
+            };
+
+            /***********************************
+             *    添加指定管理分类的访问控制条目     *
+             ***********************************/
+            $scope.addEntry = function(code) {
+                loggerService.debug('添加指定管理分类的访问控制条目:begin');
+
+                $scope.items = ["one",'two', 'three'];
+
+                $scope.modalInstance = $uibModal.open({
+                    templateUrl: 'modules/system/system.permission.entry.add.html',
+                    controller: 'modalController',
+                    resolve: {
+                        items: function () {
+                            return $scope.items;
+                        }
+                    }
+                });
+
+                $scope.modalInstance.result.then(function (selectedItem) {
+                    $scope.selected = selectedItem;
+                    loggerService.info('ok button');
+                }, function () {
+                    loggerService.info('Modal dismissed at: ' + new Date());
+                });
+                loggerService.debug('添加指定管理分类的访问控制条目:end');
+            };
+        }]).controller('modalController', ['$scope','items',function($scope, items) {
+            console.log(JSON.stringify(items));
+            $scope.items = items;
+            $scope.username = 'zhouyc';
+            $scope.password = '123456';
         }])
         // 基础访问控制添加系统设定
         .controller('systemPermsController', function($scope,$state,Restangular,$stateParams) {
