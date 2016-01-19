@@ -9,6 +9,7 @@ require.config({
         domReady : 'bower_components/requirejs-domready/domReady',
         lodash : 'bower_components/lodash/lodash.min',
         restangular : 'bower_components/restangular/dist/restangular.min',
+        angularFilter : 'bower_components/angular-filter/dist/angular-filter.min',
         angularJwt : 'bower_components/angular-jwt/dist/angular-jwt.min',
         angularLocalStorage : 'bower_components/angular-local-storage/dist/angular-local-storage.min',
         angularModalService : 'bower_components/angular-modal-service/dst/angular-modal-service',
@@ -59,6 +60,9 @@ require.config({
         },
         restangular : {
             deps : ['angular','lodash']
+        },
+        angularFilter : {
+            deps : ['angular']
         },
         angularJwt : {
             deps : ['angular']

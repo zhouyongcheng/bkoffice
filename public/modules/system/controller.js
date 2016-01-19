@@ -1,8 +1,8 @@
 /**
  * 系统设定功能模块
  */
-define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLogger', 'angularModalService'], function(angular,$, _) {
-    angular.module('systemControllers', ['restangular','ui.router', 'LocalStorageModule', 'atm.logger', 'angularModalService'])
+define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLogger', 'angularModalService', 'angularFilter'], function(angular,$, _) {
+    angular.module('systemControllers', ['restangular','ui.router', 'LocalStorageModule', 'atm.logger', 'angularModalService','angular.filter'])
         .controller('systemController', function($scope) {
             $('#system_sidebar').metisMenu({
                 toggle: true
@@ -43,9 +43,18 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
                 $scope.showAdd = !$scope.showAdd;
             };
 
+            // 获取管理类别
             Restangular.one('/system/permission/query').get().then(function(result) {
                 loggerService.debug(JSON.stringify(result));
                 $scope.entries = result.result;
+            });
+
+            // 获取所有的权限条目
+            Restangular.one('/system/permission/entry/query').get().then(function(data) {
+                loggerService.debug("获取所有的权限条目:result:begin");
+                loggerService.debug(JSON.stringify(data));
+                loggerService.debug("获取所有的权限条目:result:end");
+                $scope.items = data.result;
             });
 
             /**
@@ -73,21 +82,20 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
             /***********************************
              *    添加指定管理分类的访问控制条目     *
              ***********************************/
-            $scope.addEntry = function(code) {
+            $scope.addEntry = function(code, name) {
+
                 loggerService.debug('添加指定管理分类的访问控制条目:begin');
-
-                $scope.items = ["one",'two', 'three'];
-
+                // 创建modal实例
                 $scope.modalInstance = $uibModal.open({
                     templateUrl: 'modules/system/system.permission.entry.add.html',
-                    controller: 'modalController',
+                    controller: 'permissionEntryAddController',
                     resolve: {
-                        items: function () {
-                            return $scope.items;
+                        category: function () {
+                            return {code:code, name:name};
                         }
                     }
                 });
-
+                // 接受modal关闭后的返回值
                 $scope.modalInstance.result.then(function (selectedItem) {
                     $scope.selected = selectedItem;
                     loggerService.info('ok button');
@@ -96,11 +104,28 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
                 });
                 loggerService.debug('添加指定管理分类的访问控制条目:end');
             };
-        }]).controller('modalController', ['$scope','items',function($scope, items) {
-            console.log(JSON.stringify(items));
-            $scope.items = items;
-            $scope.username = 'zhouyc';
-            $scope.password = '123456';
+        }]).controller('permissionEntryAddController', ['$scope','loggerService','Restangular', 'category', function($scope,loggerService,Restangular,category) {
+
+            $scope.entry = {
+                category : category,
+                code : '',
+                name : ''
+            };
+
+            // 创建管理资源的访问控制基础条目
+            $scope.save = function() {
+                loggerService.info("创建管理资源的访问控制基础条目:begin")
+                loggerService.debug(JSON.stringify($scope.entry));
+                Restangular.all('/system/permission/entry/create').post($scope.entry).then(function(result) {
+                    loggerService.debug("创建管理资源的访问控制基础条目结果:begin");
+                    loggerService.debug(JSON.stringify(result));
+                    loggerService.debug("创建管理资源的访问控制基础条目结果:end");
+                }, function (e) {
+                    loggerService.log(e);
+                });
+                loggerService.info("创建管理资源的访问控制基础条目:end");
+            };
+
         }])
         // 基础访问控制添加系统设定
         .controller('systemPermsController', function($scope,$state,Restangular,$stateParams) {

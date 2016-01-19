@@ -38,16 +38,15 @@
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{e.code}}" aria-expanded="true" aria-controls="collapseOne">
                                     {{e.name}} ({{e.description}})
                                 </a>
-                                <span class="glyphicon glyphicon-plus block btn-link pull-right" aria-hidden="true" ng-click="addEntry(e.code)">添加条目</span>
+                                <span class="glyphicon glyphicon-plus block btn-link pull-right" aria-hidden="true" ng-click="addEntry(e.code, e.name)">添加条目</span>
                             </h4>
                         </div>
                         <div id="{{e.code}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                             <div class="panel-body">
                                 <ul>
-                                    <li>管理权限1</li>
-                                    <li>管理权限2</li>
-                                    <li>管理权限3</li>
-                                    <li>管理权限4</li>
+                                    <li ng-repeat="o in items | filterBy:['category.code']: e.code">
+                                        {{o.name}}
+                                    </li>
                                 </ul>
                             </div>
                         </div>
