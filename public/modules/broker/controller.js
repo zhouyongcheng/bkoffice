@@ -1,6 +1,39 @@
-define(['angular', 'lodash', 'async', 'uiRouter','angularLocalStorage', 'atmLogger'], function(angular, _, async) {
-    angular.module('brokerControllers', ['restangular', 'ui.router', 'LocalStorageModule'])
-        .controller('brokerListController', ['$scope', 'loggerService', function ($scope, loggerService) {
+define(['angular',
+        'lodash',
+        'async',
+        'uiRouter',
+        'uiBootstrap',
+        'angularAside',
+        'angularLocalStorage',
+        'atmLogger'
+    ], function(angular, _, async) {
+        angular.module('brokerControllers', [
+            'restangular',
+            'ui.router',
+            'ui.bootstrap',
+            'ngAside',
+            'LocalStorageModule'])
+        .controller('brokerListController', ['$scope', '$aside', 'loggerService', function ($scope,$aside,loggerService) {
+
+                $scope.openAside = function(position) {
+                    $aside.open({
+                        templateUrl: 'modules/broker/aside.html',
+                        placement: position,
+                        backdrop: true,
+                        controller: function($scope, $modalInstance) {
+                            $scope.ok = function(e) {
+                                $modalInstance.close();
+                                e.stopPropagation();
+                            };
+                            $scope.cancel = function(e) {
+                                $modalInstance.dismiss();
+                                e.stopPropagation();
+                            };
+                        }
+                    })
+                };
+
+
 
             var privileges = {
                 key1: 'value1',

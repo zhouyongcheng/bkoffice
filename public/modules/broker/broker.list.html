@@ -1,7 +1,4 @@
 <div>
-
-
-
     <button uib-tooltip="tooltip" class="btn btn-default">
         tooltip
     </button>
@@ -9,13 +6,38 @@
     <button uib-popover="popover" class="btn btn-default">
         popover
     </button>
-
-
-
-
-
 </div>
 
+<div class="jumbotron panel panel-default">
+    <h2>Demo</h2>
+    <p>
+          <span class="pull-left">
+            <button type="button" class="btn btn-default btn-lg" ng-click="openAside('left')">
+                <span class="glyphicon glyphicon-align-justify"></span> Left
+            </button>
+            <button type="button" class="btn btn-default btn-lg" ng-click="openAside('top')">
+                Up <span class="glyphicon glyphicon-arrow-down"></span>
+            </button>
+          </span>
+          <span class="pull-right">
+            <button type="button" class="btn btn-default btn-lg" ng-click="openAside('bottom')">
+                Down <span class="glyphicon glyphicon-arrow-up"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-lg" ng-click="openAside('right')">
+                Right <span class="glyphicon glyphicon-align-justify"></span>
+            </button>
+          </span>
+    </p>
+    <div class="clearfix"></div>
+    <br />
+    <!-- plunk-hr -->
+    <div class="text-center">
+        <ins class="adsbygoogle text-center"
+             style="display:inline-block;width:320px;height:100px"
+             data-ad-client="ca-pub-7616772085785107"
+             data-ad-slot="4180012826"></ins>
+    </div>
+</div>
 
 <div>
     <script type="text/ng-template" id="alert.html">
