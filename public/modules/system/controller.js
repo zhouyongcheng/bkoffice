@@ -33,7 +33,9 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
             }
         })
         // 系统资源访问控制:基本访问控制设定一览
-        .controller('systemPermissionController', ['$scope', 'Restangular', 'loggerService', '$uibModal',  function($scope, Restangular, loggerService,$uibModal) {
+        .controller('systemPermissionController',
+            ['$scope', 'Restangular', 'loggerService', '$uibModal',
+              function($scope, Restangular, loggerService,$uibModal) {
             // 添加管理分类
             $scope.showAdd = false;
             $scope.validate = [];
@@ -87,6 +89,7 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
                 loggerService.debug('添加指定管理分类的访问控制条目:begin');
                 // 创建modal实例
                 $scope.modalInstance = $uibModal.open({
+                    animation: true,
                     templateUrl: 'modules/system/system.permission.entry.add.html',
                     controller: 'permissionEntryAddController',
                     resolve: {
@@ -95,16 +98,18 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
                         }
                     }
                 });
+
                 // 接受modal关闭后的返回值
-                $scope.modalInstance.result.then(function (selectedItem) {
-                    $scope.selected = selectedItem;
+                $scope.modalInstance.result.then(function (entry) {
+                    $scope.items.push(entry);
                     loggerService.info('ok button');
                 }, function () {
                     loggerService.info('Modal dismissed at: ' + new Date());
                 });
                 loggerService.debug('添加指定管理分类的访问控制条目:end');
             };
-        }]).controller('permissionEntryAddController', ['$scope','loggerService','Restangular', 'category', function($scope,loggerService,Restangular,category) {
+        }]).controller('permissionEntryAddController', ['$scope','loggerService','Restangular', '$uibModalInstance', 'category',
+            function($scope,loggerService,Restangular,$uibModalInstance,category) {
 
             $scope.entry = {
                 category : category,
@@ -120,12 +125,17 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
                     loggerService.debug("创建管理资源的访问控制基础条目结果:begin");
                     loggerService.debug(JSON.stringify(result));
                     loggerService.debug("创建管理资源的访问控制基础条目结果:end");
+                    $uibModalInstance.close(result.result);
                 }, function (e) {
                     loggerService.log(e);
                 });
                 loggerService.info("创建管理资源的访问控制基础条目:end");
             };
 
+            //取消，放弃保存
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
         }])
         // 基础访问控制添加系统设定
         .controller('systemPermsController', function($scope,$state,Restangular,$stateParams) {

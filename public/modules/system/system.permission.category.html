@@ -45,7 +45,7 @@
                             <div class="panel-body">
                                 <ul>
                                     <li ng-repeat="o in items | filterBy:['category.code']: e.code">
-                                        {{o.name}}
+                                        {{o.name}} <span>:</span> [{{o.code}}]
                                     </li>
                                 </ul>
                             </div>
