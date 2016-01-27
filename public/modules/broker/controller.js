@@ -5,14 +5,17 @@ define(['angular',
         'uiBootstrap',
         'angularAside',
         'angularLocalStorage',
-        'atmLogger'
+        'atmLogger',
+        'js/directive'
     ], function(angular, _, async) {
         angular.module('brokerControllers', [
             'restangular',
             'ui.router',
             'ui.bootstrap',
             'ngAside',
-            'LocalStorageModule'])
+            'LocalStorageModule',
+            'atm.directives'
+        ])
         .controller('brokerListController', ['$scope', '$aside', 'loggerService', function ($scope,$aside,loggerService) {
 
                 $scope.openAside = function(position) {
@@ -33,6 +36,10 @@ define(['angular',
                     })
                 };
 
+
+                $scope.signup = {
+                    name : ''
+                };
 
 
             var privileges = {

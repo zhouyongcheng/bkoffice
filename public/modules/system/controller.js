@@ -184,5 +184,39 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
                 console.log("分配的特权");
             }
         })
+        // 查询系统用户控制器
+        .controller('systemUserListController', ['$scope', 'Restangular', 'loggerService', function($scope, Restangular,loggerService) {
+            loggerService.debug("查询系统用户控制器:begin");
+            Restangular.one('/user/available').get().then(function (result) {
+                $scope.users = result.result;
+                loggerService.debug(" ------------ users begin -------------");
+                loggerService.debug(JSON.stringify(result.result));
+                loggerService.debug(" ------------ users end-------------");
+            }, function (e) {
+                loggerService.error(e);
+            });
+        }])
+        // 添加系统用户控制器
+        .controller('systemUserAddController', ['$scope', 'Restangular', function($scope, Restangular) {
+            $scope.user = {
+                accessibility:'_PUBLIC'
+            };
+            // 创建用户
+            $scope.create = function() {
+                Restangular.all('/user/add').post($scope.user).then(function(user) {
+                    console.log("-----------创建用户begin-------------");
+                    console.log(JSON.stringify(user));
+                    console.log("-----------创建用户end-------------");
+                    //if (user) {
+                    //    $state.go('dashboard.system.users', {
+                    //        category:$stateParams.category,
+                    //        nid:$stateParams.nid
+                    //    });
+                    //}
+                }, function(e) {
+                    console.log(JSON.stringify(e));
+                });
+            };
+        }])
 
     });
