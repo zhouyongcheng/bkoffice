@@ -1,3 +1,6 @@
+<div></div>
+
+
 <div>
     <button uib-tooltip="tooltip" class="btn btn-default">
         tooltip
@@ -52,3 +55,16 @@
     <button type="button" class='btn btn-default' ng-click="lodash()">lodash</button>
 
 </div>
+
+<form name="signup_form">
+    <input ng-class="{error: signup_form.name.$dirty && signup_form.name.$invalid}"
+           type="text"
+           placeholder="Name"
+           name="name"
+           ng-model="signup.name"
+           ng-minlength=3
+           ng-maxlength=20 required ng-focus />
+
+    <input type="button" value="rootScope.rootInfo" ng-click="rootInfo() "/>
+
+</form>

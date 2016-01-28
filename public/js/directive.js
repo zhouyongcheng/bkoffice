@@ -22,6 +22,28 @@ define(['angular', 'lodash', 'restangular'], function(angular,_) {
         };
     });
 
+    app.directive('ngFocus', [function() {
+        var FOCUS_CLASS = 'focus_class';
+        return {
+            restrict : 'A',
+            required : 'ngModel',
+            link : function (scope, element, attrs, ctrl) {
+                ctrl.$focused = false;
+                element.bind('focus', function (event) {
+                    element.addClass(FOCUS_CLASS);
+                    scope.$apply(function () {
+                        ctrl.$focused = true;
+                    });
+                }).bind('blur', function (event) {
+                    element.removeClass(FOCUS_CLASS);
+                    scope.$apply(function () {
+                       ctrl.$focused = false;
+                    });
+                });
+            }
+        };
+    }]);
+
     /**
      * 性别标签
      * {code:'_MALE', label:'男'},

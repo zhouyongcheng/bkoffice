@@ -56,7 +56,13 @@ define([
          'systemModule',
          'includeModule',
          'uploadModule'
-        ])
+        ]).run(function ($rootScope) {
+            $rootScope.appName = "安家中国房产服务平台";
+
+            $rootScope.rootInfo = function() {
+                console.log("root info message :" + $rootScope.appName);
+            }
+        })
         .factory('sessionInjector', function(localStorageService) {
             var sessionInjector = {
                 request: function(config) {
@@ -115,16 +121,18 @@ define([
                     url:'/users',
                     views : {
                         'content@dashboard': {
-                            templateUrl: 'modules/system/system.users.html'
+                            templateUrl: 'modules/system/system.user.list.html',
+                            controller : 'systemUserListController'
                         }
                     }
                 })
-                // 添加用户
-                .state('dashboard.system.adduser', {
+                // 添加系统用户机能
+                .state('dashboard.system.useradd', {
                     url:'/useradd',
                     views : {
                         'content@dashboard': {
-                            templateUrl: 'modules/system/system.useradd.html'
+                            templateUrl: 'modules/system/system.user.add.html',
+                            controller : 'systemUserAddController'
                         }
                     }
                 })
