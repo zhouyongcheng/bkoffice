@@ -197,26 +197,27 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
             });
         }])
         // 添加系统用户控制器
-        .controller('systemUserAddController', ['$scope', 'Restangular', function($scope, Restangular) {
+        .controller('systemUserAddController', ['$scope', 'Restangular', '$state', 'loggerService', function($scope, Restangular, $state, loggerService) {
             $scope.user = {
                 accessibility:'_PUBLIC'
             };
             // 创建用户
             $scope.create = function() {
                 Restangular.all('/user/add').post($scope.user).then(function(user) {
-                    console.log("-----------创建用户begin-------------");
-                    console.log(JSON.stringify(user));
-                    console.log("-----------创建用户end-------------");
-                    //if (user) {
-                    //    $state.go('dashboard.system.users', {
-                    //        category:$stateParams.category,
-                    //        nid:$stateParams.nid
-                    //    });
-                    //}
+                    loggerService.debug("-----------创建用户begin-------------");
+                    loggerService.debug(JSON.stringify(user));
+                    loggerService.debug("-----------创建用户end-------------");
+
+                    $state.go('dashboard.system.users')
+
                 }, function(e) {
-                    console.log(JSON.stringify(e));
+                    loggerService.debug(JSON.stringify(e));
                 });
             };
+            // 返回操作
+            $scope.back = function () {
+                $state.go('dashboard.system.users');
+            }
         }])
 
     });
