@@ -158,7 +158,8 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
             }
         })
         // 系统添加角色机能
-        .controller('systemRoleAddController', function($scope,$state,Restangular,$stateParams) {
+        .controller('systemRoleAddController', ['$scope','$state','Restangular','loggerService',
+            function($scope,$state,Restangular,loggerService) {
             // 如该是super用户，获取所有的访问控制权限
             // 如该不是super用户，获取该用户的所有可用权限
             $scope.categories = [
@@ -174,16 +175,16 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
             Restangular.one('/perms/all').get().then(function(data) {
                 var permissions = data.result;
                 $scope.perms = _.groupBy(permissions, 'categoryName')
-                console.log(JSON.stringify($scope.perms));
+                loggerService.debug(JSON.stringify($scope.perms));
 
             });
 
             $scope.save = function() {
-                console.log("分配的特权");
-                console.log($scope.role.permissions);
-                console.log("分配的特权");
+                loggerService.debug("分配的特权");
+                loggerService.debug($scope.role.permissions);
+                loggerService.debug("分配的特权");
             }
-        })
+        }])
         // 查询系统用户控制器
         .controller('systemUserListController', ['$scope', 'Restangular', 'loggerService', function($scope, Restangular,loggerService) {
             loggerService.debug("查询系统用户控制器:begin");
@@ -197,26 +198,23 @@ define(['angular', 'jquery', 'lodash', 'uiRouter','angularLocalStorage', 'atmLog
             });
         }])
         // 添加系统用户控制器
-        .controller('systemUserAddController', ['$scope', 'Restangular', function($scope, Restangular) {
+        .controller('systemUserAddController', ['$scope', 'Restangular', '$state', 'loggerService', function($scope, Restangular, $state, loggerService) {
             $scope.user = {
                 accessibility:'_PUBLIC'
             };
             // 创建用户
             $scope.create = function() {
                 Restangular.all('/user/add').post($scope.user).then(function(user) {
-                    console.log("-----------创建用户begin-------------");
-                    console.log(JSON.stringify(user));
-                    console.log("-----------创建用户end-------------");
-                    //if (user) {
-                    //    $state.go('dashboard.system.users', {
-                    //        category:$stateParams.category,
-                    //        nid:$stateParams.nid
-                    //    });
-                    //}
+                    loggerService.debug(JSON.stringify(user));
+                    $state.go('dashboard.system.users');
                 }, function(e) {
-                    console.log(JSON.stringify(e));
+                    loggerService.debug(JSON.stringify(e));
                 });
             };
+
+            $scope.back = function () {
+                $state.go('dashboard.system.users');
+            }
         }])
 
     });

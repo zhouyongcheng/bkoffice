@@ -1,3 +1,3 @@
 define(['lodash'], function(_) {
-    _.compact();
+    var array = [];
 });

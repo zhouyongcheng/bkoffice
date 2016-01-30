@@ -5,6 +5,7 @@
   "dependencies": {
     "express": "2.5.8",
     "express-cors": "0.0.3",
+    "grunt": "^0.4.5",
     "jade": ">= 0.0.1",
     "lodash": "^3.10.1"
   }
