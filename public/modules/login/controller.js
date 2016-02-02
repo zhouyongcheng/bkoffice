@@ -1,6 +1,7 @@
-define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
-    angular.module('loginControllers', ['restangular','ui.router', 'LocalStorageModule'])
-        .controller('LoginController', function($scope,$state,Restangular,localStorageService) {
+define(['angular', 'uiRouter','angularLocalStorage','atmLogger'], function(angular) {
+    angular.module('loginControllers', ['restangular','ui.router', 'LocalStorageModule','atm.logger'])
+        .controller('LoginController', ['$scope','$state','Restangular','localStorageService','loggerService',
+            function($scope,$state,Restangular,localStorageService,loggerService) {
             $scope.user = {};
             $scope.login = function() {
                 Restangular.all('/signin').post($scope.user).then(function(data) {
@@ -13,5 +14,5 @@ define(['angular', 'uiRouter','angularLocalStorage'], function(angular) {
                     console.log("error occurs" + e);
                 });
             }
-    });
+    }]);
 });
