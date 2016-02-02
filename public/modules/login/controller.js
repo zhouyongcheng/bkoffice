@@ -6,12 +6,12 @@ define(['angular', 'uiRouter','angularLocalStorage','atmLogger'], function(angul
             $scope.login = function() {
                 Restangular.all('/signin').post($scope.user).then(function(data) {
                     localStorageService.set('token', data.result);
-                    console.log("login user information begin");
-                    console.log(JSON.stringify(data));
-                    console.log("login user information end");
+                    loggerService.debug("login user information begin");
+                    loggerService.debug(JSON.stringify(data));
+                    loggerService.debug("login user information end");
                     $state.transitionTo('dashboard.distributor.list');
                 }, function(e) {
-                    console.log("error occurs" + e);
+                    loggerService.error("error occurs" + e);
                 });
             }
     }]);

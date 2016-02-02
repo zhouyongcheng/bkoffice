@@ -7,8 +7,8 @@ require.config({
         uiRouter : 'bower_components/angular-ui-router/release/angular-ui-router.min',
         twitter: 'bower_components/bootstrap/dist/js/bootstrap.min',
         domReady : 'bower_components/requirejs-domready/domReady',
-        lodash : 'bower_components/lodash/lodash.min',
-        restangular : 'bower_components/restangular/dist/restangular.min',
+        lodash : 'bower_components/lodash/lodash',
+        restangular : 'bower_components/restangular/dist/restangular',
         angularAside : 'bower_components/angular-aside/dist/js/angular-aside.min',
         angularFilter : 'bower_components/angular-filter/dist/angular-filter.min',
         angularJwt : 'bower_components/angular-jwt/dist/angular-jwt.min',
@@ -113,8 +113,7 @@ require([
     'uiBootstrap',
     'uiBootstrapTpls',
     'prettify',
-    'treeControl',
-    'async'
+    'treeControl'
 ], function($, angular, app, domReady) {
     'use strict';
     domReady(function() {
