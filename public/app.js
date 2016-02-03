@@ -56,13 +56,15 @@ define([
          'systemModule',
          'includeModule',
          'uploadModule'
-        ]).run(function ($rootScope) {
+        ]).run(['$rootScope','Restangular', 'loggerService',function ($rootScope, Restangular, loggerService) {
             $rootScope.appName = "安家中国房产服务平台";
-
-            $rootScope.rootInfo = function() {
-                console.log("root info message :" + $rootScope.appName);
-            }
-        })
+            Restangular.setBaseUrl("http://192.168.0.103:3041/");
+            // 错误处理拦截器
+            Restangular.setErrorInterceptor(function (res) {
+                loggerService.error("exception.occurs");
+                return false; // stop promise chain
+            });
+        }])
         .factory('sessionInjector', function(localStorageService) {
             var sessionInjector = {
                 request: function(config) {
@@ -75,10 +77,13 @@ define([
             };
             return sessionInjector;
         })
-        .config(['$urlRouterProvider','$stateProvider','$httpProvider','RestangularProvider','jwtInterceptorProvider','localStorageServiceProvider',function($urlRouterProvider, $stateProvider,$httpProvider,RestangularProvider,jwtInterceptorProvider, localStorageServiceProvider) {
-            RestangularProvider.setBaseUrl("http://192.168.0.103:3041/");
+        .config(['$urlRouterProvider','$stateProvider','$httpProvider','jwtInterceptorProvider','localStorageServiceProvider',
+            function($urlRouterProvider, $stateProvider,$httpProvider,jwtInterceptorProvider, localStorageServiceProvider) {
+
             localStorageServiceProvider.setPrefix('portal').setNotify(true, true);
+            $httpProvider.defaults.useXDomain = true;
             $httpProvider.defaults.withCredentials = true;
+            delete $httpProvider.defaults.headers.common['X-Request-With'];
             $httpProvider.interceptors.push('sessionInjector');
             $urlRouterProvider.otherwise('/login');
 
